@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.v1.0.0.css">
+    <title>dashboard</title>
+</head>
+<body>
+    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">WaterFilter</span>
+        </a>
+        <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+            <span class="sr-only">Open user menu</span>
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
+            </button>
+            <!-- Dropdown menu -->
+            <div class="z-[1006] hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+            <div class="px-4 py-3 z-[1005]">
+                <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
+                <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+            </div>
+            <ul class="py-2" aria-labelledby="user-menu-button">
+                <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                </li>
+                <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                </li>
+            </ul>
+            </div>
+            <button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            </svg>
+        </button>
+        </div>
+    </nav> 
+    <div class = "mt-8 max-w-screen-xl mx-6 lg:mx-auto">
+        <div class="grid grid-cols-5 gap-5">
+            <div class = "col-span-5 md:col-span-1 z-[1002] h-[100px] rounded-lg px-2 py-1 border drop-shadow-md bg-white">
+                <h2 class="mt-2 font-semibold">Filter 1</h2>
+                <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch" data-dropdown-placement="bottom" class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Pilih Filter 
+                    <svg class="w-2.5 h-2.5 ms-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                </button>
+                <!-- Dropdown menu -->
+                <div id="dropdownSearch" class="z-[1001] hidden bg-white rounded-lg shadow w-full md:w-60 dark:bg-gray-700">
+                    <div class="p-3">
+                        <label for="input-group-search" class="sr-only">Search</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                </svg>
+                            </div>
+                            <input type="text" id="input-group-search" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search user">
+                        </div>
+                    </div>
+                    <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+                        <li>
+                            <div class="flex items-center mb-3">
+                                <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Filter 1</label>
+                            </div>
+                            <div class="flex items-center mb-3">
+                                <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Filter 2</label>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="/user/pairing/" class="flex items-center p-3 text-sm font-medium text-blue-600 border-t border-gray-200 rounded-b-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-blue-500 hover:underline">
+                        <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd"/>
+                        </svg>                          
+                        Add Filter
+                    </a>
+                </div>
+            </div>
+
+            <div class="z-10 col-span-2 md:col-span-1 h-[100px] rounded-lg px-2 py-1 border drop-shadow-md  bg-white">
+                <h2 class="mt-2 text-center font-semibold">Total Dissolverd Solid</h2>
+                <div class="flex justify-center items-center mt-3">
+                    <svg class = "text-center"width="30" height="30" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_98_21)">
+                        <path d="M31.6961 9.45655C31.3178 8.8044 30.6527 8.47827 30.0004 8.47827C29.3482 8.47827 28.683 8.8044 28.3047 9.45655L18.1308 27.0783C16.9308 29.1391 16.3047 31.513 16.3047 33.913C16.3047 41.4651 22.4481 47.6087 30.0004 47.6087C37.5527 47.6087 43.6961 41.4653 43.6961 33.913C43.6961 29.1653 42.6133 28.3566 31.6961 9.45655Z" fill="#9DF1FD"/>
+                        <path d="M43.6957 33.913C43.6957 41.4651 37.5523 47.6087 30 47.6087V8.47827C30.6521 8.47827 31.3174 8.8044 31.6957 9.45655C42.6129 28.3566 43.6957 29.1653 43.6957 33.913Z" fill="#87D7E4"/>
+                        <path d="M31.957 37.8261C31.957 38.9087 31.0832 39.7826 30.0004 39.7826C26.7657 39.7826 24.1309 37.1479 24.1309 33.9131C24.1309 32.8696 24.3917 31.8784 24.9134 30.9914C25.4482 30.0522 26.6482 29.7392 27.5873 30.2739C28.5134 30.8088 28.8395 32.0087 28.2915 32.9478C28.122 33.2478 28.0437 33.5608 28.0437 33.9131C28.0437 34.9957 28.9175 35.8696 30.0003 35.8696C31.0831 35.8696 31.957 36.7434 31.957 37.8261Z" fill="#E7ECFD"/>
+                        <path d="M60.0002 30C60.0002 46.5392 46.5392 60 30.0002 60C21.9525 60 14.3349 56.7653 8.75234 51.1566V53.4783C8.75234 54.5609 7.87859 55.4349 6.79578 55.4349C5.7132 55.4349 4.83921 54.561 4.83921 53.4783V46.0696C4.57836 44.7782 5.62191 43.6957 6.79578 43.6957H14.6219C15.7046 43.6957 16.5785 44.5696 16.5785 45.6523C16.5785 46.7349 15.7047 47.6088 14.6219 47.6088H10.7872C15.6915 52.9697 22.6306 56.0871 30.0002 56.0871C44.3872 56.0871 56.0872 44.3871 56.0872 30.0001C56.0872 27.5218 55.735 25.0697 55.0568 22.7218C54.7568 21.6784 55.3437 20.5957 56.3872 20.2957C57.4176 19.9957 58.5133 20.5957 58.8134 21.6261C59.5957 24.3392 60.0002 27.1566 60.0002 30Z" fill="#7CCC92"/>
+                        <path d="M55.4347 6.52172V14.3479C55.4347 15.3913 54.665 16.3044 53.2697 16.3044C53.2567 16.3044 53.2567 16.3044 53.2567 16.3044H45.6521C44.5695 16.3044 43.6956 15.4305 43.6956 14.3479C43.6956 13.2652 44.5693 12.3913 45.6521 12.3913H49.213C44.3087 7.03043 37.3696 3.91301 30 3.91301C15.613 3.91301 3.91301 15.613 3.91301 30C3.91301 32.4783 4.26516 34.9304 4.94344 37.2783C5.24344 38.3217 4.65645 39.4044 3.61301 39.7044C3.43043 39.7566 3.24773 39.7827 3.06516 39.7827C2.2173 39.7827 1.43473 39.2218 1.18676 38.374C0.404531 35.6609 0 32.8434 0 30C0 13.4609 13.461 0 30 0C38.1913 0 45.913 3.33914 51.5217 9.13043V6.52172C51.5217 5.43914 52.3955 4.56516 53.4783 4.56516C54.561 4.56527 55.4347 5.43914 55.4347 6.52172Z" fill="#7CCC92"/>
+                        <path d="M31.9566 37.8261C31.9566 38.9086 31.0828 39.7826 30 39.7826V35.8696C31.0827 35.8695 31.9566 36.7434 31.9566 37.8261Z" fill="#DADFF0"/>
+                        <path d="M60 30C60 46.5391 46.539 60 30 60V56.087C44.387 56.087 56.087 44.387 56.087 30C56.087 27.5217 55.7348 25.0696 55.0566 22.7217C54.7566 21.6783 55.3436 20.5956 56.387 20.2956C57.4174 19.9956 58.5131 20.5956 58.8132 21.626C59.5955 24.3391 60 27.1566 60 30Z" fill="#34B772"/>
+                        <path d="M55.4347 6.52172V14.3479C55.4347 15.3913 54.665 16.3044 53.2697 16.3044C53.2567 16.3044 53.2567 16.3044 53.2567 16.3044H45.6521C44.5695 16.3044 43.6956 15.4305 43.6956 14.3479C43.6956 13.2652 44.5693 12.3913 45.6521 12.3913H49.213C44.3087 7.03043 37.3696 3.91301 30 3.91301V0C38.1913 0 45.913 3.33914 51.5217 9.13043V6.52172C51.5217 5.43914 52.3955 4.56516 53.4783 4.56516C54.561 4.56527 55.4347 5.43914 55.4347 6.52172Z" fill="#34B772"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_98_21">
+                        <rect width="60" height="60" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                                                
+                    <p class="text-center"> <span> &nbsp; 1000</span> ppm</p>
+                </div>
+            </div>
+            <div class="z-10 col-start-4 col-end-6 md:col-span-1 h-[100px] rounded-lg px-2 py-1 border drop-shadow-md bg-white">
+                <h2 class="mt-2 text-center font-semibold">PH</h2>
+                <div class="flex justify-center items-center mt-3">
+                    <svg class = "text-center"width="30" height="30" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M40.5234 13.5586H38.3789C37.7402 13.5586 37.2188 13.0371 37.2188 12.3984C37.2188 11.7598 37.7402 11.2383 38.3789 11.2383H40.5234C41.1621 11.2383 41.6836 11.7598 41.6836 12.3984C41.6836 13.0371 41.1621 13.5586 40.5234 13.5586ZM40.5234 17.9121H38.3789C37.7402 17.9121 37.2188 17.3906 37.2188 16.752C37.2188 16.1133 37.7402 15.5918 38.3789 15.5918H40.5234C41.1621 15.5918 41.6836 16.1133 41.6836 16.752C41.6836 17.3906 41.1621 17.9121 40.5234 17.9121ZM40.5234 22.2656H38.3789C37.7402 22.2656 37.2188 21.7441 37.2188 21.1055C37.2188 20.4668 37.7402 19.9453 38.3789 19.9453H40.5234C41.1621 19.9453 41.6836 20.4668 41.6836 21.1055C41.6836 21.7383 41.1621 22.2656 40.5234 22.2656Z" fill="#1A1A1A"/>
+                        <path d="M35.3496 34.5527V9.3457C35.3496 6.30469 32.877 3.83203 29.8359 3.83203C26.7949 3.83203 24.3223 6.30469 24.3223 9.3457V34.5527C20.748 36.5098 18.3223 40.3066 18.3223 44.6602C18.3223 51.0117 23.4902 56.1738 29.8359 56.1738C36.1816 56.1738 41.3496 51.0059 41.3496 44.6602C41.3496 40.3066 38.918 36.5098 35.3496 34.5527ZM29.8301 53.7539C24.8145 53.7539 20.7305 49.6699 20.7305 44.6543C20.7305 41.707 22.1367 39.0879 24.3164 37.4238C25.043 36.8672 25.8574 36.416 26.7305 36.0996V9.3457C26.7305 7.63477 28.1191 6.24609 29.8301 6.24609C31.541 6.24609 32.9297 7.63477 32.9297 9.3457V36.0996C33.8027 36.416 34.6172 36.8672 35.3438 37.4238C37.5176 39.0879 38.9297 41.707 38.9297 44.6543C38.9297 49.6758 34.8516 53.7539 29.8301 53.7539Z" fill="#1A1A1A"/>
+                        <path d="M24.9668 44.9121C24.9668 45.5531 25.093 46.1878 25.3383 46.7799C25.5836 47.3721 25.9431 47.9102 26.3964 48.3634C26.8496 48.8166 27.3877 49.1761 27.9798 49.4214C28.572 49.6667 29.2067 49.793 29.8477 49.793C30.4886 49.793 31.1233 49.6667 31.7155 49.4214C32.3077 49.1761 32.8457 48.8166 33.2989 48.3634C33.7522 47.9102 34.1117 47.3721 34.357 46.7799C34.6023 46.1878 34.7285 45.5531 34.7285 44.9121C34.7285 43.6176 34.2143 42.3762 33.2989 41.4608C32.3836 40.5455 31.1421 40.0312 29.8477 40.0312C28.5532 40.0312 27.3117 40.5455 26.3964 41.4608C25.481 42.3762 24.9668 43.6176 24.9668 44.9121Z" fill="#00B36A"/>
+                        <path d="M35.9355 44.9531C35.3788 44.8477 34.8398 45.1699 34.664 45.6973C34.289 48.0176 32.2734 49.793 29.8476 49.793C27.1523 49.793 24.9667 47.6074 24.9667 44.9121C24.9667 42.2168 27.1523 40.0312 29.8476 40.0312C30.2402 40.0312 30.621 40.0781 30.9843 40.166C30.9901 40.1191 30.996 40.0723 30.996 40.0312V12.1699C30.996 11.5547 30.4921 11.0566 29.8827 11.0566C29.2675 11.0566 28.7694 11.5605 28.7694 12.1699V37.957C28.7167 37.957 28.6581 37.9629 28.6054 37.9746C25.7343 38.5078 23.5194 40.7051 22.9628 43.5703C22.2187 47.3906 24.7265 51.1055 28.5468 51.8438C28.998 51.9316 29.4491 51.9727 29.8944 51.9727C33.205 51.9727 36.1698 49.6289 36.8202 46.2598C36.9316 45.6562 36.539 45.0703 35.9355 44.9531Z" fill="#1A1A1A"/>
+                    </svg> 
+                    <p class="text-center"><span>1000</span></p>
+                </div>
+            </div>
+            <div class="z-10 col-span-2 md:col-span-1 h-[100px] rounded-lg px-2 py-1 border drop-shadow-md bg-white">
+                <h2 class="mt-2 text-center font-semibold">Turbidity</h2>
+                <div class="flex justify-center items-center mt-3">
+                    <svg class = "text-center"width="30" height="30" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M38.918 34.9277C38.918 44.4844 33.4922 48.3984 26.8066 48.3984C20.1211 48.3984 14.6953 44.4844 14.6953 34.9277C14.6953 25.3711 26.8066 9.95508 26.8066 9.95508C26.8066 9.95508 38.918 25.3711 38.918 34.9277Z" fill="#44C0C6"/>
+                        <path d="M26.8066 49.002C23.1211 49.002 20.0098 47.8535 17.8125 45.6738C15.3398 43.2246 14.0859 39.6035 14.0859 34.9219C14.0859 30.8496 16.1543 25.3359 20.2266 18.5391C23.2383 13.5176 26.2969 9.61523 26.3262 9.57422C26.4434 9.42773 26.6191 9.33984 26.8008 9.33984C26.9883 9.33984 27.1641 9.42773 27.2754 9.57422C27.3047 9.61523 30.3633 13.5176 33.375 18.5391C37.4531 25.3359 39.5156 30.8438 39.5156 34.9219C39.5156 39.6035 38.2617 43.2187 35.7891 45.6738C33.6035 47.8477 30.4922 49.002 26.8066 49.002ZM26.8066 10.9512C25.8398 12.2344 23.5371 15.3809 21.2637 19.1777C18.5449 23.7129 15.2988 30.1289 15.2988 34.9219C15.2988 39.2695 16.4297 42.5977 18.668 44.8125C20.6309 46.7578 23.4434 47.7891 26.8066 47.7891C30.1699 47.7891 32.9824 46.7578 34.9453 44.8125C37.1777 42.5977 38.3145 39.2695 38.3145 34.9219C38.3145 30.1289 35.0742 23.7129 32.3496 19.1777C30.0762 15.3867 27.7734 12.2402 26.8066 10.9512Z" fill="black"/>
+                        <path d="M37.4355 6.73828C37.4355 8.24722 38.035 9.69435 39.1019 10.7613C40.1689 11.8283 41.6161 12.4277 43.125 12.4277C44.6339 12.4277 46.0811 11.8283 47.1481 10.7613C48.215 9.69435 48.8145 8.24722 48.8145 6.73828C48.8145 5.22934 48.215 3.78221 47.1481 2.71523C46.0811 1.64825 44.6339 1.04883 43.125 1.04883C41.6161 1.04883 40.1689 1.64825 39.1019 2.71523C38.035 3.78221 37.4355 5.22934 37.4355 6.73828Z" fill="#80F9E7"/>
+                        <path d="M43.125 13.0312C39.6563 13.0312 36.832 10.207 36.832 6.73828C36.832 3.26953 39.6563 0.445312 43.125 0.445312C46.5938 0.445312 49.418 3.26953 49.418 6.73828C49.418 10.207 46.5996 13.0312 43.125 13.0312ZM43.125 1.65234C40.3242 1.65234 38.0391 3.93164 38.0391 6.73828C38.0391 9.53906 40.3184 11.8242 43.125 11.8242C45.9316 11.8242 48.2109 9.54492 48.2109 6.73828C48.2109 3.9375 45.9316 1.65234 43.125 1.65234Z" fill="black"/>
+                        <path d="M33.2344 29.9941C33.2344 30.6436 33.3623 31.2866 33.6108 31.8866C33.8593 32.4866 34.2236 33.0318 34.6828 33.491C35.142 33.9502 35.6872 34.3145 36.2872 34.563C36.8872 34.8115 37.5303 34.9395 38.1797 34.9395C38.8291 34.9395 39.4722 34.8115 40.0722 34.563C40.6722 34.3145 41.2173 33.9502 41.6765 33.491C42.1358 33.0318 42.5 32.4866 42.7486 31.8866C42.9971 31.2866 43.125 30.6436 43.125 29.9941C43.125 29.3447 42.9971 28.7016 42.7486 28.1017C42.5 27.5017 42.1358 26.9565 41.6765 26.4973C41.2173 26.0381 40.6722 25.6738 40.0722 25.4253C39.4722 25.1767 38.8291 25.0488 38.1797 25.0488C37.5303 25.0488 36.8872 25.1767 36.2872 25.4253C35.6872 25.6738 35.142 26.0381 34.6828 26.4973C34.2236 26.9565 33.8593 27.5017 33.6108 28.1017C33.3623 28.7016 33.2344 29.3447 33.2344 29.9941Z" fill="#80F9E7"/>
+                        <path d="M38.1797 35.5488C35.1152 35.5488 32.625 33.0586 32.625 29.9941C32.625 26.9297 35.1152 24.4395 38.1797 24.4395C41.2441 24.4395 43.7344 26.9297 43.7344 29.9941C43.7344 33.0586 41.2383 35.5488 38.1797 35.5488ZM38.1797 25.6523C35.7832 25.6523 33.8379 27.5977 33.8379 29.9941C33.8379 32.3906 35.7832 34.3359 38.1797 34.3359C40.5762 34.3359 42.5215 32.3906 42.5215 29.9941C42.5215 27.5977 40.5703 25.6523 38.1797 25.6523Z" fill="black"/>
+                        <path d="M7.60547 54.0879C7.60547 55.3995 8.12649 56.6573 9.05392 57.5848C9.98134 58.5122 11.2392 59.0332 12.5508 59.0332C13.8624 59.0332 15.1202 58.5122 16.0476 57.5848C16.9751 56.6573 17.4961 55.3995 17.4961 54.0879C17.4961 52.7763 16.9751 51.5185 16.0476 50.591C15.1202 49.6636 13.8624 49.1426 12.5508 49.1426C11.2392 49.1426 9.98134 49.6636 9.05392 50.591C8.12649 51.5185 7.60547 52.7763 7.60547 54.0879Z" fill="#80F9E7"/>
+                        <path d="M12.5508 59.6426C9.48633 59.6426 6.99609 57.1523 6.99609 54.0879C6.99609 51.0234 9.48633 48.5332 12.5508 48.5332C15.6152 48.5332 18.1055 51.0234 18.1055 54.0879C18.1055 57.1523 15.6152 59.6426 12.5508 59.6426ZM12.5508 49.7461C10.1543 49.7461 8.20898 51.6914 8.20898 54.0879C8.20898 56.4844 10.1543 58.4297 12.5508 58.4297C14.9473 58.4297 16.8926 56.4844 16.8926 54.0879C16.8926 51.6973 14.9473 49.7461 12.5508 49.7461Z" fill="black"/>
+                        <path d="M49.2832 36.4395C49.2832 37.4325 49.6777 38.3848 50.3798 39.087C51.082 39.7891 52.0343 40.1836 53.0273 40.1836C54.0204 40.1836 54.9727 39.7891 55.6749 39.087C56.377 38.3848 56.7715 37.4325 56.7715 36.4395C56.7715 35.4464 56.377 34.4941 55.6749 33.7919C54.9727 33.0898 54.0204 32.6953 53.0273 32.6953C52.0343 32.6953 51.082 33.0898 50.3798 33.7919C49.6777 34.4941 49.2832 35.4464 49.2832 36.4395Z" fill="#80F9E7"/>
+                        <path d="M53.0273 40.793C50.6309 40.793 48.6797 38.8418 48.6797 36.4453C48.6797 34.0488 50.6309 32.0977 53.0273 32.0977C55.4238 32.0977 57.375 34.0488 57.375 36.4453C57.375 38.8418 55.4238 40.793 53.0273 40.793ZM53.0273 33.3047C51.2988 33.3047 49.8867 34.7109 49.8867 36.4453C49.8867 38.1738 51.293 39.5859 53.0273 39.5859C54.7559 39.5859 56.168 38.1797 56.168 36.4453C56.168 34.7109 54.7559 33.3047 53.0273 33.3047Z" fill="black"/>
+                        <path d="M10.7988 13.0605C10.7988 14.0536 11.1933 15.0059 11.8955 15.7081C12.5976 16.4102 13.55 16.8047 14.543 16.8047C15.536 16.8047 16.4883 16.4102 17.1905 15.7081C17.8926 15.0059 18.2871 14.0536 18.2871 13.0605C18.2871 12.0675 17.8926 11.1152 17.1905 10.413C16.4883 9.71088 15.536 9.31641 14.543 9.31641C13.55 9.31641 12.5976 9.71088 11.8955 10.413C11.1933 11.1152 10.7988 12.0675 10.7988 13.0605Z" fill="#80F9E7"/>
+                        <path d="M14.543 17.4082C12.1465 17.4082 10.1953 15.457 10.1953 13.0605C10.1953 10.6641 12.1465 8.71289 14.543 8.71289C16.9395 8.71289 18.8906 10.6641 18.8906 13.0605C18.8906 15.457 16.9453 17.4082 14.543 17.4082ZM14.543 9.91992C12.8145 9.91992 11.4023 11.3262 11.4023 13.0605C11.4023 14.7949 12.8086 16.2012 14.543 16.2012C16.2715 16.2012 17.6836 14.7949 17.6836 13.0605C17.6836 11.3262 16.2773 9.91992 14.543 9.91992Z" fill="black"/>
+                        <path d="M38.1797 54.4512C38.1797 55.2981 38.5161 56.1103 39.115 56.7092C39.7139 57.3081 40.5261 57.6445 41.373 57.6445C42.22 57.6445 43.0322 57.3081 43.6311 56.7092C44.23 56.1103 44.5664 55.2981 44.5664 54.4512C44.5664 53.6042 44.23 52.792 43.6311 52.1931C43.0322 51.5943 42.22 51.2578 41.373 51.2578C40.5261 51.2578 39.7139 51.5943 39.115 52.1931C38.5161 52.792 38.1797 53.6042 38.1797 54.4512Z" fill="#80F9E7"/>
+                        <path d="M41.373 58.2539C39.2754 58.2539 37.5703 56.5488 37.5703 54.4512C37.5703 52.3535 39.2754 50.6484 41.373 50.6484C43.4707 50.6484 45.1758 52.3535 45.1758 54.4512C45.1758 56.5488 43.4707 58.2539 41.373 58.2539ZM41.373 51.8613C39.9434 51.8613 38.7832 53.0215 38.7832 54.4512C38.7832 55.8809 39.9434 57.041 41.373 57.041C42.8027 57.041 43.9629 55.8809 43.9629 54.4512C43.9629 53.0215 42.8027 51.8613 41.373 51.8613Z" fill="black"/>
+                        <path d="M3.15234 28.875C3.15234 29.8898 3.55546 30.863 4.273 31.5805C4.99055 32.2981 5.96375 32.7012 6.97852 32.7012C7.99328 32.7012 8.96648 32.2981 9.68403 31.5805C10.4016 30.863 10.8047 29.8898 10.8047 28.875C10.8047 27.8602 10.4016 26.887 9.68403 26.1695C8.96648 25.4519 7.99328 25.0488 6.97852 25.0488C5.96375 25.0488 4.99055 25.4519 4.273 26.1695C3.55546 26.887 3.15234 27.8602 3.15234 28.875Z" fill="#80F9E7"/>
+                        <path d="M6.97852 33.3047C4.53516 33.3047 2.54883 31.3184 2.54883 28.875C2.54883 26.4316 4.53516 24.4453 6.97852 24.4453C9.42188 24.4453 11.4082 26.4316 11.4082 28.875C11.4082 31.3184 9.42188 33.3047 6.97852 33.3047ZM6.97852 25.6523C5.20312 25.6523 3.75586 27.0996 3.75586 28.875C3.75586 30.6504 5.20312 32.0977 6.97852 32.0977C8.75391 32.0977 10.2012 30.6504 10.2012 28.875C10.1953 27.0937 8.75391 25.6523 6.97852 25.6523Z" fill="black"/>
+                        </svg>                        
+                    <p class="text-center"><span> &nbsp; 1000</span> NTU</p>
+                </div>
+            </div>
+            <div class="z-10 col-start-4 col-end-6 md:col-span-1 h-[100px] rounded-lg px-2 py-1 border drop-shadow-md bg-white">
+                <h2 class="mt-2 text-center font-semibold">Pintu Air</h2>
+                <div class="flex justify-center items-center mt-3"> 
+                    <label class="inline-flex items-center mb-5 cursor-pointer">
+                        <input type="checkbox" value="" class="sr-only peer" checked>
+                        <div class="relative w-16 h-9 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-7 after:h-7 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class = "mt-8 max-w-screen-xl mx-5 xl:mx-auto">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-3 md:col-span-1 rounded-lgborder drop-shadow-md bg-white">
+                <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                    <div class="flex justify-between mb-5">
+                    <div>
+                        <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">Total Dissolved Solids</h5>
+                    </div>
+                    <div class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2"> 
+                        1000 PPM
+                    </div>                    
+                    </div>
+                    <div id="chart-1"></div>
+                    <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
+                    <div class="flex justify-between items-center pt-5">
+                        <!-- Button -->
+                        <button
+                        id="dropdownDefaultButton"
+                        data-dropdown-toggle="lastDaysdropdown"
+                        data-dropdown-placement="bottom"
+                        class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+                        type="button">
+                        Last 7 days
+                        <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
+                            </li>
+                            </ul>
+                        </div>
+                        <a
+                        href="#"
+                        class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
+                        </a>
+                    </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="col-span-3 md:col-span-1 ">
+                <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                    <div class="flex justify-between mb-5">
+                        
+                        <div>
+                            <h5 class = "leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">Potential Hydrogen (PH)</h2>
+                            
+                        </div> 
+                        <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">14    </h5>                  
+                    </div>
+                    <div id="chart-2"></div>
+                    <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
+                    <div class="flex justify-between items-center pt-5">
+                        <!-- Button -->
+                        <button
+                        id="dropdownDefaultButton"
+                        data-dropdown-toggle="lastDaysdropdown"
+                        data-dropdown-placement="bottom"
+                        class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+                        type="button">
+                        Last 7 days
+                        <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
+                            </li>
+                            </ul>
+                        </div>
+                        <a
+                        href="#"
+                        class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
+                        </a>
+                    </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="col-span-3 md:col-span-1">
+                <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                    <div class="flex justify-between mb-5">
+                        
+                        <div>
+                            <h5 class = "leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">Turbidity</h2>
+                            
+                        </div> 
+                        <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">1000 NTU</h5>                  
+                    </div>
+                    <div id="chart-3"></div>
+                    <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
+                    <div class="flex justify-between items-center pt-5">
+                        <!-- Button -->
+                        <button
+                        id="dropdownDefaultButton"
+                        data-dropdown-toggle="lastDaysdropdown"
+                        data-dropdown-placement="bottom"
+                        class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+                        type="button">
+                        Last 7 days
+                        <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
+                            </li>
+                            </ul>
+                        </div>
+                        <a
+                        href="#"
+                        class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
+                        </a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/flowbite.js"></script>
+<script src="/js/apexcharts.js"></script>
+<script>
+    // set the target element that will be collapsed or expanded (eg. navbar menu)
+    const $targetEl = document.getElementById('targetEl');
+
+    // optionally set a trigger element (eg. a button, hamburger icon)
+    const $triggerEl = document.getElementById('triggerEl');
+
+    // optional options with default values and callback functions
+    const options = {
+        onCollapse: () => {
+            console.log('element has been collapsed');
+        },
+        onExpand: () => {
+            console.log('element has been expanded');
+        },
+        onToggle: () => {
+            console.log('element has been toggled');
+        },
+    };
+
+    const instanceOptions = {
+    id: 'targetEl',
+    override: true
+    };
+</script>
+<script> 
+    const option_chart1 = {
+        // enable and customize data labels using the following example, learn more from here: https://apexcharts.com/docs/datalabels/
+        dataLabels: {
+        enabled: true,
+        // offsetX: 10,
+        style: {
+            cssClass: 'text-xs text-white font-medium'
+        },
+        },
+        grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+            left: 16,
+            right: 16,
+            top: -26
+        },
+        },
+        series: [
+        {
+            name: "Part Per Million",
+            data: [64, 41, 76, 41, 113, 173],
+            color: "#7E3BF2",
+        },
+        ],
+        chart: {
+        height: "100%",
+        maxWidth: "100%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+            enabled: false,
+        },
+        toolbar: {
+            show: false,
+        },
+        },
+        tooltip: {
+        enabled: true,
+        x: {
+            show: false,
+        },
+        },
+        legend: {
+        show: true
+        },
+        fill: {
+        type: "gradient",
+        gradient: {
+            opacityFrom: 0.55,
+            opacityTo: 0,
+            shade: "#1C64F2",
+            gradientToColors: ["#1C64F2"],
+        },
+        },
+        stroke: {
+        width: 6,
+        },
+        xaxis: {
+        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        labels: {
+            show: false,
+        },
+        axisBorder: {
+            show: false,
+        },
+        axisTicks: {
+            show: false,
+        },
+        },
+        yaxis: {
+        show: false,
+        labels: {
+            formatter: function (value) {
+            return '' + value;
+            }
+        }
+        },
+        }
+        
+        if (document.getElementById("chart-1") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("chart-1"), option_chart1);
+        chart.render();
+        };
+</script>
+<script> 
+    const option_chart2 = {
+        // enable and customize data labels using the following example, learn more from here: https://apexcharts.com/docs/datalabels/
+        dataLabels: {
+        enabled: true,
+        // offsetX: 10,
+        style: {
+            cssClass: 'text-xs text-white font-medium'
+        },
+        },
+        grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+            left: 16,
+            right: 16,
+            top: -26
+        },
+        },
+        series: [
+        {
+            name: "Part Per Million",
+            data: [4.5, 5.6, 5, 4.7, 5.5, 4.3],
+            color: "#7E3BF2",
+        },
+        ],
+        chart: {
+        height: "100%",
+        maxWidth: "100%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+            enabled: false,
+        },
+        toolbar: {
+            show: false,
+        },
+        },
+        tooltip: {
+        enabled: true,
+        x: {
+            show: false,
+        },
+        },
+        legend: {
+        show: true
+        },
+        fill: {
+        type: "gradient",
+        gradient: {
+            opacityFrom: 0.55,
+            opacityTo: 0,
+            shade: "#1C64F2",
+            gradientToColors: ["#1C64F2"],
+        },
+        },
+        stroke: {
+        width: 6,
+        },
+        xaxis: {
+        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        labels: {
+            show: false,
+        },
+        axisBorder: {
+            show: false,
+        },
+        axisTicks: {
+            show: false,
+        },
+        },
+        yaxis: {
+        show: false,
+        labels: {
+            formatter: function (value) {
+            return '' + value;
+            }
+        }
+        },
+        }
+        
+        if (document.getElementById("chart-2") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("chart-2"), option_chart2);
+        chart.render();
+        };
+</script>
+<script> 
+    const option_chart3 = {
+        // enable and customize data labels using the following example, learn more from here: https://apexcharts.com/docs/datalabels/
+        dataLabels: {
+        enabled: true,
+        // offsetX: 10,
+        style: {
+            cssClass: 'text-xs text-white font-medium'
+        },
+        },
+        grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+            left: 16,
+            right: 16,
+            top: -26
+        },
+        },
+        series: [
+        {
+            name: "Part Per Million",
+            data: [20, 16, 21, 17, 18, 20],
+            color: "#7E3BF2",
+        },
+        ],
+        chart: {
+        height: "100%",
+        maxWidth: "100%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+            enabled: false,
+        },
+        toolbar: {
+            show: false,
+        },
+        },
+        tooltip: {
+        enabled: true,
+        x: {
+            show: false,
+        },
+        },
+        legend: {
+        show: true
+        },
+        fill: {
+        type: "gradient",
+        gradient: {
+            opacityFrom: 0.55,
+            opacityTo: 0,
+            shade: "#1C64F2",
+            gradientToColors: ["#1C64F2"],
+        },
+        },
+        stroke: {
+        width: 6,
+        },
+        xaxis: {
+        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        labels: {
+            show: false,
+        },
+        axisBorder: {
+            show: false,
+        },
+        axisTicks: {
+            show: false,
+        },
+        },
+        yaxis: {
+        show: false,
+        labels: {
+            formatter: function (value) {
+            return '' + value;
+            }
+        }
+        },
+        }
+        
+        if (document.getElementById("chart-3") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("chart-3"), option_chart3);
+        chart.render();
+        };
+</script>
+</html>
