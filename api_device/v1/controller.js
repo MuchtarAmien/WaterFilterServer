@@ -40,14 +40,30 @@ exports.generateRecord = async (req, res) => {
         // Mendapatkan data dari body permintaan
         const { kode_unik, control_motor_dc, monior_kekeruhan, monitor_ph, monitor_tds } = req.body;
 
-        // Membuat record baru menggunakan Prisma
-        const newRecord = await prisma.record.create({
+        // Validasi data yang diterima
+        if (!kode_unik || monior_kekeruhan === undefined || monitor_ph === undefined || monitor_tds === undefined) {
+            return resError({ res, errors: "Invalid data provided" });
+        }
+
+        // Perbarui tabel perangkat dengan nilai yang baru diterima
+        const updateDevice = await prisma.perangkat.update({
+            where: { kode_unik: kode_unik },
             data: {
-                kode_unik,
-                control_motor_dc,
-                monior_kekeruhan,
-                monitor_ph,
-                monitor_tds
+                control_motor_dc: control_motor_dc,
+                monior_kekeruhan: monior_kekeruhan,
+                monitor_ph: monitor_ph,
+                monitor_tds: monitor_tds
+            }
+        });
+
+        // Tambahkan record tersebut ke dalam tabel "Riwayat"
+        const newRecord = await prisma.riwayat.create({
+            data: {
+                kode_unik: kode_unik,
+                control_motor_dc: control_motor_dc,
+                monior_kekeruhan: monior_kekeruhan,
+                monitor_ph: monitor_ph,
+                monitor_tds: monitor_tds
             }
         });
 
@@ -55,6 +71,6 @@ exports.generateRecord = async (req, res) => {
         return resSuccess({ res, title: "Success to create new record", data: newRecord });
     } catch (error) {
         // Menangani kesalahan dan mengirim respons error
-        return resError({ res, errors: error });
+        return resError({ res, errors: error.message });
     }
 };
