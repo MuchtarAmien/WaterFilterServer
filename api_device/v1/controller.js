@@ -38,14 +38,14 @@ exports.generateDeviceId = async (req, res) => {
 exports.generateRecord = async (req, res) => {
     try {
         // Mendapatkan data dari body permintaan
-        const { kode_unik, control_motor_dc, monitor_kekeruhan, monitor_ph, monitor_tds } = req.body;
+        const { kode_unik, control_motor_dc, monior_kekeruhan, monitor_ph, monitor_tds } = req.body;
 
         // Membuat record baru menggunakan Prisma
         const newRecord = await prisma.record.create({
             data: {
                 kode_unik,
                 control_motor_dc,
-                monitor_kekeruhan,
+                monior_kekeruhan,
                 monitor_ph,
                 monitor_tds
             }
