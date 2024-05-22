@@ -68,7 +68,7 @@ exports.generateRecord = async (req, res) => {
 
         // Periksa entri terbaru di tabel "Riwayat"
         const recentRecord = await prisma.riwayat.findFirst({
-            where: { id_perangkatr: deviceExists.id_perangkat },
+            where: { id_perangkat: deviceExists.id_perangkat },
             orderBy: { createdAt: 'desc' }
         });
 
@@ -82,7 +82,7 @@ exports.generateRecord = async (req, res) => {
                     monitor_tds: monitor_tds,
                     monitor_ph: monitor_ph,
                     monior_kekeruhan: monior_kekeruhan,
-                    id_perangkatr: deviceExists.id_perangkat
+                    id_perangkat: deviceExists.id_perangkat
                 }
             });
 
