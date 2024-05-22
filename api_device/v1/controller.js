@@ -66,18 +66,33 @@ exports.generateRecord = async (req, res) => {
 
         console.log("Device updated:", updateDevice);
 
-        const newRecord = await prisma.riwayat.create({
-            data: {
-                monior_kekeruhan: monior_kekeruhan,
-                monitor_ph: monitor_ph,
-                monitor_tds: monitor_tds,
-                perangkatId: deviceExists.id
-            }
+        // Periksa entri terbaru di tabel "Riwayat"
+        const recentRecord = await prisma.riwayat.findFirst({
+            where: { id_perangkatr: deviceExists.id_perangkat },
+            orderBy: { createdAt: 'desc' }
         });
 
-        console.log("New record created:", newRecord);
+        // Dapatkan waktu sekarang
+        const now = new Date();
 
-        return resSuccess({ res, title: "Success to create new record", data: newRecord });
+        // Periksa apakah ada entri dan selisih waktunya lebih dari satu menit
+        if (!recentRecord || (now - new Date(recentRecord.createdAt)) > 60000) {
+            const newRecord = await prisma.riwayat.create({
+                data: {
+                    monitor_tds: monitor_tds,
+                    monitor_ph: monitor_ph,
+                    monior_kekeruhan: monior_kekeruhan,
+                    id_perangkatr: deviceExists.id_perangkat
+                }
+            });
+
+            console.log("New record created:", newRecord);
+
+            return resSuccess({ res, title: "Success to create new record", data: newRecord });
+        } else {
+            console.log("New record not created because the time difference is less than 1 minute");
+            return resError({ res, errors: "New record not created because the time difference is less than 1 minute" });
+        }
     } catch (error) {
         console.error("Error creating record:", error);
         return resError({ res, errors: error.message });
