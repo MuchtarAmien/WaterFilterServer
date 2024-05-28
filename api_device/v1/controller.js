@@ -33,25 +33,9 @@ client.on('message', function (topic, message) {
     console.log('Received message:', topic, message.toString());
 });
 
-// Function to send "Hello World" signal to the "controlMotor" topic
-function sendHelloWorldSignal() {
-    // Send MQTT message
-    client.publish('controlMotor', 'Hello World', function (err) {
-        if (err) {
-            console.log('Failed to send MQTT message', err);
-        } else {
-            console.log('MQTT message sent successfully');
-        }
-    });
-}
-
-// Call the function to send the signal
-sendHelloWorldSignal();
-
-// Function to handle switch toggle events
 function handleSwitchToggle(isChecked) {
     // Mengirim sinyal berbeda berdasarkan arah switch
-    const signal = isChecked ? '1' : '0'; // Jika switch ke kanan, kirim '0', jika ke kiri, kirim '1'
+    const signal = isChecked ? '1' : '0'; // Jika switch ke kanan, kirim '1', jika ke kiri, kirim '0'
     client.publish('controlMotor', signal, function (err) {
         if (err) {
             console.log('Gagal mengirim pesan MQTT', err);
@@ -62,24 +46,15 @@ function handleSwitchToggle(isChecked) {
 }
 
 // Fungsi untuk menginisialisasi listener untuk perubahan switch
-function initializeSwitchListener() {
-    // Di sini kita akan mendengarkan perubahan pada switch
-    // Ganti interval simulasi dengan listener aktual untuk perubahan switch dari inputan pengguna atau event lainnya
-
-    // Mendapatkan elemen switch
-    const yourSwitchElement = document.getElementById('mySwitch');
-
+function initializeSwitchListener(io) {
     // Menambahkan event listener untuk perubahan status switch
-    yourSwitchElement.addEventListener('change', function () {
+    switchEmitter.on('switchChanged', function (isChecked) {
         // Memanggil fungsi handleSwitchToggle saat status switch berubah
-        handleSwitchToggle(this.checked);
+        handleSwitchToggle(isChecked);
     });
 }
 
-// Memanggil fungsi untuk menginisialisasi listener switch
-initializeSwitchListener();
-
-
+module.exports = { switchEmitter, initializeSwitchListener };
 
 exports.deviceList = async (req, res) => {
     try {
