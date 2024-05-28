@@ -50,37 +50,50 @@ sendHelloWorldSignal();
 
 // Function to handle switch toggle events
 function handleSwitchToggle(isChecked) {
-    // Determine the signal based on the switch state
     const signal = isChecked ? '1' : '0';
-
-    // Send MQTT message
     client.publish('controlMotor', signal, function (err) {
         if (err) {
-            console.log('Failed to send MQTT message', err);
+            console.log('Gagal mengirim pesan MQTT', err);
         } else {
-            console.log('MQTT message sent successfully');
+            console.log('Pesan MQTT berhasil dikirim');
         }
     });
 }
+// Dapatkan elemen switch
+const switchElement = document.getElementById('mySwitch');
 
-// Function to initialize the switch listener
-function initializeSwitchListener() {
-    // Assuming you have an event listener for the switch toggle change
-    // Replace "yourSwitchElement" with the actual selector for your switch element
-    const yourSwitchElement = document.getElementById('mySwitch');
-    // Check if the element exists before adding the event listener
-    if (yourSwitchElement) {
-        // Simulate change event, assuming it's checked by default
-        handleSwitchToggle(true);
+// Pastikan elemen switch ditemukan sebelum menambahkan event listener
+if (switchElement) {
+    // Tambahkan event listener
+    switchElement.addEventListener('change', function () {
+        handleSwitchToggle(this.checked);
+    });
+
+    // Fungsi untuk menginisialisasi listener untuk perubahan switch
+    function initializeSwitchListener() {
+        // Di sini Anda bisa menambahkan logika untuk mendengarkan perubahan pada switch,
+        // misalnya dari inputan dari pengguna atau event lainnya.
+
+        // Misalnya, untuk tujuan demonstrasi, kita akan mensimulasikan perubahan status switch setiap detik.
+        setInterval(() => {
+            // Generate nilai acak untuk status switch (true/false)
+            const isChecked = Math.random() < 0.5 ? true : false;
+            // Emit event 'switchChanged' bersama dengan nilai status switch
+            switchEmitter.emit('switchChanged', isChecked);
+        }, 1000);
     }
-}
 
-// Call the function to initialize the switch listener after the MQTT client is connected
-client.on('connect', function () {
-    console.log('Connected to MQTT broker');
+    // Panggil fungsi untuk menginisialisasi listener
     initializeSwitchListener();
-});
 
+    // Tangani event 'switchChanged'
+    switchEmitter.on('switchChanged', function (isChecked) {
+        // Panggil fungsi handleSwitchToggle saat event 'switchChanged' terjadi
+        handleSwitchToggle(isChecked);
+    });
+} else {
+    console.log("Element with ID 'mySwitch' not found.");
+}
 
 exports.deviceList = async (req, res) => {
     try {

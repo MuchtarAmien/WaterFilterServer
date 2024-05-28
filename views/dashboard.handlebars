@@ -249,6 +249,20 @@
                         <div
                             class="relative w-16 h-9 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-7 after:h-7 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                         </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                // Kode di sini akan dijalankan setelah DOM selesai dimuat
+                                // Letakkan kode event listener di sini
+
+                                // Dapatkan elemen switch
+                                const switchElement = document.getElementById('mySwitch');
+
+                                // Tambahkan event listener
+                                switchElement.addEventListener('change', function () {
+                                    handleSwitchToggle(this.checked);
+                                });
+                            });
+                        </script>
                     </label>
                 </div>
             </div>
