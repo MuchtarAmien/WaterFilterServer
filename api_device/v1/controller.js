@@ -7,15 +7,7 @@ const EventEmitter = require('events');
 
 // Buat instance EventEmitter
 const switchEmitter = new EventEmitter();
-function tesHandler(req, res) {
-    // Logika untuk menangani request
-    res.send('Ini adalah respon dari route GET');
-}
 
-// Export fungsi agar dapat digunakan di file lain
-module.exports = {
-    tes: tesHandler
-};
 var options = {
     host: '068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud',
     port: 8883,
@@ -41,28 +33,54 @@ client.on('message', function (topic, message) {
     console.log('Received message:', topic, message.toString());
 });
 
-function handleSwitchToggle(isChecked) {
-    // Mengirim sinyal berbeda berdasarkan arah switch
-    const signal = isChecked ? '1' : '0'; // Jika switch ke kanan, kirim '1', jika ke kiri, kirim '0'
-    client.publish('controlMotor', signal, function (err) {
+// Function to send "Hello World" signal to the "controlMotor" topic
+function sendHelloWorldSignal() {
+    // Send MQTT message
+    client.publish('controlMotor', 'Hello World', function (err) {
         if (err) {
-            console.log('Gagal mengirim pesan MQTT', err);
+            console.log('Failed to send MQTT message', err);
         } else {
-            console.log('Pesan MQTT berhasil dikirim');
+            console.log('MQTT message sent successfully');
         }
     });
 }
 
-// Fungsi untuk menginisialisasi listener untuk perubahan switch
-function initializeSwitchListener(io) {
-    // Menambahkan event listener untuk perubahan status switch
-    switchEmitter.on('switchChanged', function (isChecked) {
-        // Memanggil fungsi handleSwitchToggle saat status switch berubah
-        handleSwitchToggle(isChecked);
+// Call the function to send the signal
+sendHelloWorldSignal();
+
+// Function to handle switch toggle events
+function handleSwitchToggle(isChecked) {
+    // Determine the signal based on the switch state
+    const signal = isChecked ? '1' : '0';
+
+    // Send MQTT message
+    client.publish('controlMotor', signal, function (err) {
+        if (err) {
+            console.log('Failed to send MQTT message', err);
+        } else {
+            console.log('MQTT message sent successfully');
+        }
     });
 }
 
-module.exports = { switchEmitter, initializeSwitchListener };
+// Function to initialize the switch listener
+function initializeSwitchListener() {
+    // Assuming you have an event listener for the switch toggle change
+    // Replace "yourSwitchElement" with the actual selector for your switch element
+    const yourSwitchElement = document.getElementById('mySwitch');
+    // Check if the element exists before adding the event listener
+    if (yourSwitchElement) {
+        // Simulate change event, assuming it's checked by default
+        handleSwitchToggle(true);
+    }
+}
+
+// Call the function to initialize the switch listener after the MQTT client is connected
+client.on('connect', function () {
+    console.log('Connected to MQTT broker');
+    initializeSwitchListener();
+});
+
 
 exports.deviceList = async (req, res) => {
     try {

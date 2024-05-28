@@ -251,26 +251,6 @@
                         </div>
                     </label>
                 </div>
-                <!-- Import library Socket.IO untuk WebSocket -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
-                <!-- Script untuk mengatur perilaku switch dan mengirim statusnya ke server -->
-                <script>
-                    // Mendapatkan elemen switch
-                    const yourSwitchElement = document.getElementById('mySwitch');
-
-                    // Menambahkan event listener untuk perubahan status switch
-                    yourSwitchElement.addEventListener('change', function () {
-                        // Memanggil fungsi handleSwitchToggle saat status switch berubah
-                        // Mengirim status switch ke server menggunakan WebSocket atau teknologi komunikasi real-time lainnya
-                        const isChecked = this.checked;
-                        // Kirim status switch ke server melalui WebSocket atau teknologi komunikasi real-time lainnya
-                        // Contoh menggunakan WebSocket:
-                        socket.emit('switchChanged', isChecked);
-                    });
-
-                    // Contoh menggunakan WebSocket untuk mengirim status switch ke server
-                    const socket = io(); // Koneksi WebSocket ke server
-                </script>
             </div>
         </div>
     </div>
