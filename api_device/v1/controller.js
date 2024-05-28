@@ -50,7 +50,8 @@ sendHelloWorldSignal();
 
 // Function to handle switch toggle events
 function handleSwitchToggle(isChecked) {
-    const signal = isChecked ? '1' : '0';
+    // Mengirim sinyal berbeda berdasarkan arah switch
+    const signal = isChecked ? '1' : '0'; // Jika switch ke kanan, kirim '0', jika ke kiri, kirim '1'
     client.publish('controlMotor', signal, function (err) {
         if (err) {
             console.log('Gagal mengirim pesan MQTT', err);
@@ -62,26 +63,22 @@ function handleSwitchToggle(isChecked) {
 
 // Fungsi untuk menginisialisasi listener untuk perubahan switch
 function initializeSwitchListener() {
-    // Di sini Anda bisa menambahkan logika untuk mendengarkan perubahan pada switch,
-    // misalnya dari inputan dari pengguna atau event lainnya.
+    // Di sini kita akan mendengarkan perubahan pada switch
+    // Ganti interval simulasi dengan listener aktual untuk perubahan switch dari inputan pengguna atau event lainnya
 
-    // Misalnya, untuk tujuan demonstrasi, kita akan mensimulasikan perubahan status switch setiap detik.
-    setInterval(() => {
-        // Generate nilai acak untuk status switch (true/false)
-        const isChecked = Math.random() < 0.5 ? true : false;
-        // Emit event 'switchChanged' bersama dengan nilai status switch
-        switchEmitter.emit('switchChanged', isChecked);
-    }, 1000);
+    // Mendapatkan elemen switch
+    const yourSwitchElement = document.getElementById('mySwitch');
+
+    // Menambahkan event listener untuk perubahan status switch
+    yourSwitchElement.addEventListener('change', function () {
+        // Memanggil fungsi handleSwitchToggle saat status switch berubah
+        handleSwitchToggle(this.checked);
+    });
 }
 
-// Panggil fungsi untuk menginisialisasi listener
+// Memanggil fungsi untuk menginisialisasi listener switch
 initializeSwitchListener();
 
-// Tangani event 'switchChanged'
-switchEmitter.on('switchChanged', function (isChecked) {
-    // Panggil fungsi handleSwitchToggle saat event 'switchChanged' terjadi
-    handleSwitchToggle(isChecked);
-});
 
 
 exports.deviceList = async (req, res) => {
