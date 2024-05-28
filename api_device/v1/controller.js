@@ -43,34 +43,6 @@ function sendHelloWorldSignal() {
 // Call the function to send the signal
 sendHelloWorldSignal();
 
-// Function to handle switch toggle events
-function handleSwitchToggle(isChecked) {
-    // Determine the signal based on the switch state
-    const signal = isChecked ? '1' : '0';
-
-    // Send MQTT message
-    client.publish('controlMotor', signal, function (err) {
-        if (err) {
-            console.log('Failed to send MQTT message', err);
-        } else {
-            console.log('MQTT message sent successfully');
-        }
-    });
-}
-
-// Function to initialize the switch listener
-function initializeSwitchListener() {
-    // Assuming you have an event listener for the switch toggle change
-    // Replace "yourSwitchElement" with the actual selector for your switch element
-    const yourSwitchElement = document.getElementById('your-switch-id');
-    yourSwitchElement.addEventListener('change', function () {
-        // Call the handleSwitchToggle function passing the current state of the switch
-        handleSwitchToggle(this.checked);
-    });
-}
-
-// Call the function to initialize the switch listener
-initializeSwitchListener();
 
 
 exports.deviceList = async (req, res) => {
