@@ -1,6 +1,32 @@
 const { resError, resSuccess } = require("../../services/responseHandler");
 const { generateString } = require("../../services/stringGenerator");
 const prisma = require("../../prisma/client");
+var mqtt = require('mqtt');
+
+var options = {
+    host: '068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud',
+    port: 8883,
+    protocol: 'mqtts',
+    username: 'muchtar123',
+    password: 'Muchtar123'
+};
+
+// initialize the MQTT client
+var client = mqtt.connect(options);
+
+// setup the callbacks
+client.on('connect', function () {
+    console.log('Connected to MQTT broker');
+});
+
+client.on('error', function (error) {
+    console.log(error);
+});
+
+client.on('message', function (topic, message) {
+    // called each time a message is received
+    console.log('Received message:', topic, message.toString());
+});
 
 exports.deviceList = async (req, res) => {
     try {
@@ -87,6 +113,15 @@ exports.generateRecord = async (req, res) => {
             });
 
             console.log("New record created:", newRecord);
+
+            // Send MQTT message
+            client.publish('controlMotor', '0', function (err) {
+                if (err) {
+                    console.log('Failed to send MQTT message', err);
+                } else {
+                    console.log('MQTT message sent successfully');
+                }
+            });
 
             return resSuccess({ res, title: "Success to create new record", data: newRecord });
         } else {
