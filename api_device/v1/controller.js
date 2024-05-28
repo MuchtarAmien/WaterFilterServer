@@ -1,14 +1,16 @@
 const { resError, resSuccess } = require("../../services/responseHandler");
 const { generateString } = require("../../services/stringGenerator");
 const prisma = require("../../prisma/client");
-var mqtt = require('mqtt');
-// Import EventEmitter
+const mqtt = require('mqtt');
+const express = require('express');
+const bodyParser = require('body-parser');
 const EventEmitter = require('events');
 
 // Buat instance EventEmitter
 const switchEmitter = new EventEmitter();
 
-var options = {
+// Konfigurasi koneksi MQTT
+const options = {
     host: '068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud',
     port: 8883,
     protocol: 'mqtts',
@@ -16,10 +18,10 @@ var options = {
     password: 'Muchtar123'
 };
 
-// initialize the MQTT client
-var client = mqtt.connect(options);
+// Inisialisasi klien MQTT
+const client = mqtt.connect(options);
 
-// setup the callbacks
+// Setup callbacks
 client.on('connect', function () {
     console.log('Connected to MQTT broker');
 });
@@ -33,24 +35,9 @@ client.on('message', function (topic, message) {
     console.log('Received message:', topic, message.toString());
 });
 
-// Function to send "Hello World" signal to the "controlMotor" topic
-function sendHelloWorldSignal() {
-    // Send MQTT message
-    client.publish('controlMotor', 'Hello World', function (err) {
-        if (err) {
-            console.log('Failed to send MQTT message', err);
-        } else {
-            console.log('MQTT message sent successfully');
-        }
-    });
-}
-
-// Call the function to send the signal
-sendHelloWorldSignal();
-
 // Fungsi untuk mengirim sinyal MQTT berdasarkan status switch
 function handleSwitchToggle(isChecked) {
-    const signal = isChecked ? '1' : '0';
+    const signal = isChecked ? '0' : '1';
     client.publish('controlMotor', signal, function (err) {
         if (err) {
             console.log('Gagal mengirim pesan MQTT', err);
@@ -63,6 +50,29 @@ function handleSwitchToggle(isChecked) {
 // Tangani event 'switchChanged' yang dipancarkan oleh EventEmitter
 switchEmitter.on('switchChanged', function (isChecked) {
     handleSwitchToggle(isChecked);
+});
+
+// Inisialisasi aplikasi Express
+const app = express();
+
+// Gunakan body-parser middleware
+app.use(bodyParser.json());
+
+// Handle permintaan switch
+app.post('/switch', (req, res) => {
+    const isChecked = req.body.isChecked;
+    console.log('Switch status received in POST /switch:', isChecked);
+
+    // Kirim status switch ke klien MQTT
+    switchEmitter.emit('switchChanged', isChecked);
+
+    res.json({ success: true });
+});
+
+// Mulai server
+const port = 3000;
+app.listen(port, () => {
+    console.log('Server berjalan di http://localhost:${port}/');
 });
 
 exports.deviceList = async (req, res) => {
