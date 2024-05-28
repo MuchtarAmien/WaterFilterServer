@@ -63,14 +63,18 @@ function initializeSwitchListener() {
     // Assuming you have an event listener for the switch toggle change
     // Replace "yourSwitchElement" with the actual selector for your switch element
     const yourSwitchElement = document.getElementById('mySwitch');
-    yourSwitchElement.addEventListener('change', function () {
-        // Call the handleSwitchToggle function passing the current state of the switch
-        handleSwitchToggle(this.checked);
-    });
+    // Check if the element exists before adding the event listener
+    if (yourSwitchElement) {
+        // Simulate change event, assuming it's checked by default
+        handleSwitchToggle(true);
+    }
 }
 
-// Call the function to initialize the switch listener
-initializeSwitchListener();
+// Call the function to initialize the switch listener after the MQTT client is connected
+client.on('connect', function () {
+    console.log('Connected to MQTT broker');
+    initializeSwitchListener();
+});
 
 
 exports.deviceList = async (req, res) => {
