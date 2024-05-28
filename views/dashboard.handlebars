@@ -158,7 +158,35 @@
                         </defs>
                     </svg>
 
-                    <p class="text-center"> <span id="tdsValue"> &nbsp; </span> ppm</p>
+                    <!-- Elemen HTML untuk menampilkan nilai TDS -->
+                    <p class="text-center">TDS Value: <span id="tdsValue">Loading...</span> ppm</p>
+
+                    <!-- Script JavaScript untuk menghubungkan ke broker MQTT dan memperbarui nilai -->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.7/mqtt.min.js"></script>
+                    <script>
+                        // Inisialisasi koneksi MQTT
+                        const mqttBroker = 'wss://068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud:8883';
+                        const options = {
+                            protocol: 'mqtts',
+                            clientId: 'web-client', // ID klien Anda
+                            username: 'muchtar123',
+                            password: 'Muchtar123'
+                        };
+                        const client = mqtt.connect(mqttBroker, options);
+
+                        client.on('connect', function () {
+                            console.log('Connected to MQTT broker');
+                            client.subscribe('tdsValue');
+                        });
+
+                        client.on('message', function (topic, message) {
+                            if (topic === 'tdsValue') {
+                                const tdsValue = message.toString();
+                                // Update konten elemen HTML dengan id 'tdsValue'
+                                document.getElementById('tdsValue').textContent = tdsValue;
+                            }
+                        });
+                    </script>
                 </div>
             </div>
             <div
