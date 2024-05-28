@@ -237,11 +237,11 @@
                             d="M6.97852 33.3047C4.53516 33.3047 2.54883 31.3184 2.54883 28.875C2.54883 26.4316 4.53516 24.4453 6.97852 24.4453C9.42188 24.4453 11.4082 26.4316 11.4082 28.875C11.4082 31.3184 9.42188 33.3047 6.97852 33.3047ZM6.97852 25.6523C5.20312 25.6523 3.75586 27.0996 3.75586 28.875C3.75586 30.6504 5.20312 32.0977 6.97852 32.0977C8.75391 32.0977 10.2012 30.6504 10.2012 28.875C10.1953 27.0937 8.75391 25.6523 6.97852 25.6523Z"
                             fill="black" />
                     </svg>
-                    <p class="text-center">Turbidity Value: <span id="turbidityValue">Loading...</span> NTU</p>
+                    <p class="text-center"><span id="turbidityValue"></span> NTU</p>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.7/mqtt.min.js"></script>
                     <script>
                         // Inisialisasi koneksi MQTT
-                        const mqttBroker = '068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud:8883';
+                        const mqttBroker = 'wss://068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud:8883';
                         const options = {
                             protocol: 'mqtts',
                             clientId: 'web-client', // ID klien Anda
