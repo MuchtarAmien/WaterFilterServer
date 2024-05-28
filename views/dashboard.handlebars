@@ -163,16 +163,21 @@
 
                     <!-- Script JavaScript untuk menghubungkan ke broker MQTT dan memperbarui nilai -->
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.7/mqtt.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.7/mqtt.min.js"></script>
                     <script>
-                        // Inisialisasi koneksi MQTT
-                        const mqttBroker = 'wss://068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud:8883';
+                        // Konfigurasi koneksi MQTT
+                        const mqttBroker = 'wss://068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud';
+                        const mqttPort = 8883; // Port MQTT
+
                         const options = {
                             protocol: 'mqtts',
                             clientId: 'web-client', // ID klien Anda
                             username: 'muchtar123',
                             password: 'Muchtar123'
                         };
-                        const client = mqtt.connect(mqttBroker, options);
+
+                        // Inisialisasi koneksi MQTT
+                        const client = mqtt.connect(mqttBroker + ':' + mqttPort, options);
 
                         client.on('connect', function () {
                             console.log('Connected to MQTT broker');
@@ -187,6 +192,7 @@
                             }
                         });
                     </script>
+
                 </div>
             </div>
             <div
