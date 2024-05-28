@@ -7,7 +7,15 @@ const EventEmitter = require('events');
 
 // Buat instance EventEmitter
 const switchEmitter = new EventEmitter();
+function tesHandler(req, res) {
+    // Logika untuk menangani request
+    res.send('Ini adalah respon dari route GET');
+}
 
+// Export fungsi agar dapat digunakan di file lain
+module.exports = {
+    tes: tesHandler
+};
 var options = {
     host: '068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud',
     port: 8883,
