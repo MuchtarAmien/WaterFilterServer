@@ -1,14 +1,13 @@
 const { resError, resSuccess } = require("../../services/responseHandler");
 const { generateString } = require("../../services/stringGenerator");
 const prisma = require("../../prisma/client");
-var mqtt = require('mqtt');
-// Import EventEmitter
+const mqtt = require('mqtt');
 const EventEmitter = require('events');
 
 // Buat instance EventEmitter
 const switchEmitter = new EventEmitter();
 
-var options = {
+const options = {
     host: '068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud',
     port: 8883,
     protocol: 'mqtts',
@@ -16,37 +15,31 @@ var options = {
     password: 'Muchtar123'
 };
 
-// initialize the MQTT client
-var client = mqtt.connect(options);
 
-// setup the callbacks
-client.on('connect', function () {
-    console.log('Connected to MQTT broker');
+// Inisialisasi klien MQTT untuk menerima pesan
+const clientReceiveMessage = mqtt.connect(options);
+
+// setup the callbacks for receiving messages
+clientReceiveMessage.on('connect', function () {
+    console.log('Connected to MQTT broker for receiving messages');
+    clientReceiveMessage.subscribe('tdsValue');
+    clientReceiveMessage.subscribe('phValue');
+    clientReceiveMessage.subscribe('turbidityValue');
 });
 
-client.on('error', function (error) {
-    console.log(error);
-});
-
-client.on('message', function (topic, message) {
-    // called each time a message is received
+clientReceiveMessage.on('message', function (topic, message) {
     console.log('Received message:', topic, message.toString());
+    if (topic === 'tdsValue') {
+        // Handle tdsValue message
+        console.log('TDS Value:', message.toString());
+    } else if (topic === 'phValue') {
+        // Handle phValue message
+        console.log('pH Value:', message.toString());
+    } else if (topic === 'turbidityValue') {
+        // Handle turbidityValue message
+        console.log('Turbidity Value:', message.toString());
+    }
 });
-
-// Function to send "Hello World" signal to the "controlMotor" topic
-function sendHelloWorldSignal() {
-    // Send MQTT message
-    client.publish('controlMotor', 'Hello World', function (err) {
-        if (err) {
-            console.log('Failed to send MQTT message', err);
-        } else {
-            console.log('MQTT message sent successfully');
-        }
-    });
-}
-
-// Call the function to send the signal
-sendHelloWorldSignal();
 
 exports.deviceList = async (req, res) => {
     try {
