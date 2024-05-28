@@ -62,7 +62,7 @@ function handleSwitchToggle(isChecked) {
 function initializeSwitchListener() {
     // Assuming you have an event listener for the switch toggle change
     // Replace "yourSwitchElement" with the actual selector for your switch element
-    const yourSwitchElement = document.getElementById('your-switch-id');
+    const yourSwitchElement = document.getElementById('mySwitch');
     yourSwitchElement.addEventListener('change', function () {
         // Call the handleSwitchToggle function passing the current state of the switch
         handleSwitchToggle(this.checked);
