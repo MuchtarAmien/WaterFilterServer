@@ -251,15 +251,16 @@
                         </div>
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
-                                // Kode di sini akan dijalankan setelah DOM selesai dimuat
-                                // Letakkan kode event listener di sini
-
                                 // Dapatkan elemen switch
                                 const switchElement = document.getElementById('mySwitch');
 
                                 // Tambahkan event listener
                                 switchElement.addEventListener('change', function () {
-                                    handleSwitchToggle(this.checked);
+                                    // Tangani perubahan status switch
+                                    const isChecked = this.checked;
+                                    const signal = isChecked ? '1' : '0';
+                                    console.log('Mengirim sinyal:', signal);
+                                    // Di sini Anda bisa menambahkan logika untuk mengirim sinyal ke server atau tempat lainnya
                                 });
                             });
                         </script>

@@ -47,7 +47,8 @@ function sendHelloWorldSignal() {
 
 // Call the function to send the signal
 sendHelloWorldSignal();
-// Function to handle switch toggle events
+
+// Fungsi untuk mengirim sinyal MQTT berdasarkan status switch
 function handleSwitchToggle(isChecked) {
     const signal = isChecked ? '1' : '0';
     client.publish('controlMotor', signal, function (err) {
@@ -59,19 +60,10 @@ function handleSwitchToggle(isChecked) {
     });
 }
 
-// Fungsi untuk menginisialisasi listener untuk perubahan switch
-function initializeSwitchListener() {
-    // Misalnya, untuk tujuan demonstrasi, kita akan mensimulasikan perubahan status switch setiap detik.
-    setInterval(() => {
-        // Generate nilai acak untuk status switch (true/false)
-        const isChecked = Math.random() < 0.5 ? true : false;
-        // Panggil fungsi handleSwitchToggle saat event 'switchChanged' terjadi
-        handleSwitchToggle(isChecked);
-    }, 1000);
-}
-
-// Panggil fungsi untuk menginisialisasi listener
-initializeSwitchListener();
+// Tangani event 'switchChanged' yang dipancarkan oleh EventEmitter
+switchEmitter.on('switchChanged', function (isChecked) {
+    handleSwitchToggle(isChecked);
+});
 
 exports.deviceList = async (req, res) => {
     try {
