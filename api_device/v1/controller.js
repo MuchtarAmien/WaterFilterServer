@@ -28,6 +28,22 @@ client.on('message', function (topic, message) {
     console.log('Received message:', topic, message.toString());
 });
 
+// Function to send "Hello World" signal to the "controlMotor" topic
+function sendHelloWorldSignal() {
+    // Send MQTT message
+    client.publish('controlMotor', 'Hello World', function (err) {
+        if (err) {
+            console.log('Failed to send MQTT message', err);
+        } else {
+            console.log('MQTT message sent successfully');
+        }
+    });
+}
+
+// Call the function to send the signal
+sendHelloWorldSignal();
+
+
 exports.deviceList = async (req, res) => {
     try {
         return resSuccess({ res, title: "Success to show all device list", data: ["device 1", "device 2"] });
