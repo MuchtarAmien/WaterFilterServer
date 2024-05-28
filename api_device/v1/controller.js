@@ -47,7 +47,6 @@ function sendHelloWorldSignal() {
 
 // Call the function to send the signal
 sendHelloWorldSignal();
-
 // Function to handle switch toggle events
 function handleSwitchToggle(isChecked) {
     const signal = isChecked ? '1' : '0';
@@ -59,41 +58,20 @@ function handleSwitchToggle(isChecked) {
         }
     });
 }
-// Dapatkan elemen switch
-const switchElement = document.getElementById('mySwitch');
 
-// Pastikan elemen switch ditemukan sebelum menambahkan event listener
-if (switchElement) {
-    // Tambahkan event listener
-    switchElement.addEventListener('change', function () {
-        handleSwitchToggle(this.checked);
-    });
-
-    // Fungsi untuk menginisialisasi listener untuk perubahan switch
-    function initializeSwitchListener() {
-        // Di sini Anda bisa menambahkan logika untuk mendengarkan perubahan pada switch,
-        // misalnya dari inputan dari pengguna atau event lainnya.
-
-        // Misalnya, untuk tujuan demonstrasi, kita akan mensimulasikan perubahan status switch setiap detik.
-        setInterval(() => {
-            // Generate nilai acak untuk status switch (true/false)
-            const isChecked = Math.random() < 0.5 ? true : false;
-            // Emit event 'switchChanged' bersama dengan nilai status switch
-            switchEmitter.emit('switchChanged', isChecked);
-        }, 1000);
-    }
-
-    // Panggil fungsi untuk menginisialisasi listener
-    initializeSwitchListener();
-
-    // Tangani event 'switchChanged'
-    switchEmitter.on('switchChanged', function (isChecked) {
+// Fungsi untuk menginisialisasi listener untuk perubahan switch
+function initializeSwitchListener() {
+    // Misalnya, untuk tujuan demonstrasi, kita akan mensimulasikan perubahan status switch setiap detik.
+    setInterval(() => {
+        // Generate nilai acak untuk status switch (true/false)
+        const isChecked = Math.random() < 0.5 ? true : false;
         // Panggil fungsi handleSwitchToggle saat event 'switchChanged' terjadi
         handleSwitchToggle(isChecked);
-    });
-} else {
-    console.log("Element with ID 'mySwitch' not found.");
+    }, 1000);
 }
+
+// Panggil fungsi untuk menginisialisasi listener
+initializeSwitchListener();
 
 exports.deviceList = async (req, res) => {
     try {
