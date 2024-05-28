@@ -450,6 +450,24 @@
         </div>
     </div>
 </body>
+<script>
+    // Fungsi untuk menangani perubahan status switch
+    function handleSwitchToggle(isChecked) {
+        const signal = isChecked ? '1' : '0';
+        console.log('Mengirim sinyal MQTT:', signal);
+        // Di sini Anda akan menggunakan client.publish() untuk mengirim sinyal MQTT
+        // Gantilah console.log dengan logika yang sesuai untuk mengirim sinyal MQTT
+    }
+
+    // Mendapatkan elemen switch
+    const yourSwitchElement = document.getElementById('mySwitch');
+
+    // Menambahkan event listener untuk perubahan status switch
+    yourSwitchElement.addEventListener('change', function () {
+        // Memanggil fungsi handleSwitchToggle saat status switch berubah
+        handleSwitchToggle(this.checked);
+    });
+</script>
 <script src="/js/flowbite.js"></script>
 <script src="/js/apexcharts.js"></script>
 <script>
