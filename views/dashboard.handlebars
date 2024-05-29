@@ -239,19 +239,18 @@
                 <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
                     <div class="flex justify-between mb-5">
                         <div>
-                            <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">Total
-                                Dissolved Solids</h5>
+                            <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">Total Dissolved Solids</h5>
                         </div>
                         <div class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">
-                            1000 PPM
+                            <span id="tdsPlaceholder">Loading</span> PPM
                         </div>
                     </div>
-                    <div id="chart-1"></div>
+                    <div id="chart-tds"></div>
                     <div
                         class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
                         <div class="flex justify-between items-center pt-5">
                             <!-- Button -->
-                            <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown"
+                            <button id="tdsDropDownButton" data-dropdown-toggle="tdsDropDown"
                                 data-dropdown-placement="bottom"
                                 class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
                                 type="button">
@@ -263,7 +262,7 @@
                                 </svg>
                             </button>
                             <!-- Dropdown menu -->
-                            <div id="lastDaysdropdown"
+                            <div id="tdsDropDown"
                                 class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                     aria-labelledby="dropdownDefaultButton">
@@ -304,18 +303,18 @@
                     <div class="flex justify-between mb-5">
 
                         <div>
-                            <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">Potential
-                                Hydrogen (PH)</h2>
-
+                            <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">
+                                Potential Hydrogen (PH)
+                            </h2>
                         </div>
-                        <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">14 </h5>
+                        <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2" id="phPlaceholder">Loading </h5>
                     </div>
-                    <div id="chart-2"></div>
+                    <div id="chart-ph"></div>
                     <div
                         class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
                         <div class="flex justify-between items-center pt-5">
                             <!-- Button -->
-                            <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown"
+                            <button id="phDropdownButton" data-dropdown-toggle="phDropDown"
                                 data-dropdown-placement="bottom"
                                 class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
                                 type="button">
@@ -327,7 +326,7 @@
                                 </svg>
                             </button>
                             <!-- Dropdown menu -->
-                            <div id="lastDaysdropdown"
+                            <div id="phDropDown"
                                 class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                     aria-labelledby="dropdownDefaultButton">
@@ -371,14 +370,14 @@
                             <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">Turbidity</h2>
 
                         </div>
-                        <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2">1000 NTU</h5>
+                        <h5 class="leading-none text-lg font-bold text-gray-900 dark:text-white pb-2"><span id="turbidityPlaceholder">Loading</span> NTU</h5>
                     </div>
-                    <div id="chart-3"></div>
+                    <div id="chart-turbidity"></div>
                     <div
                         class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
                         <div class="flex justify-between items-center pt-5">
                             <!-- Button -->
-                            <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown"
+                            <button id="turbidityDropDownButton" data-dropdown-toggle="turbidityDropDown"
                                 data-dropdown-placement="bottom"
                                 class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
                                 type="button">
@@ -390,7 +389,7 @@
                                 </svg>
                             </button>
                             <!-- Dropdown menu -->
-                            <div id="lastDaysdropdown"
+                            <div id="turbidityDropDown"
                                 class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                     aria-labelledby="dropdownDefaultButton">
@@ -437,288 +436,6 @@
         <script src="/js/{{this}}"></script>
     {{/each}}
 {{/if}}
-<script>
-    // set the target element that will be collapsed or expanded (eg. navbar menu)
-    const $targetEl = document.getElementById('targetEl');
 
-    // optionally set a trigger element (eg. a button, hamburger icon)
-    const $triggerEl = document.getElementById('triggerEl');
-
-    // optional options with default values and callback functions
-    const options = {
-        onCollapse: () => {
-            console.log('element has been collapsed');
-        },
-        onExpand: () => {
-            console.log('element has been expanded');
-        },
-        onToggle: () => {
-            console.log('element has been toggled');
-        },
-    };
-
-    const instanceOptions = {
-        id: 'targetEl',
-        override: true
-    };
-</script>
-<script>
-    const option_chart1 = {
-        // enable and customize data labels using the following example, learn more from here: https://apexcharts.com/docs/datalabels/
-        dataLabels: {
-            enabled: true,
-            // offsetX: 10,
-            style: {
-                cssClass: 'text-xs text-white font-medium'
-            },
-        },
-        grid: {
-            show: false,
-            strokeDashArray: 4,
-            padding: {
-                left: 16,
-                right: 16,
-                top: -26
-            },
-        },
-        series: [
-            {
-                name: "Part Per Million",
-                data: [64, 41, 76, 41, 113, 173],
-                color: "#7E3BF2",
-            },
-        ],
-        chart: {
-            height: "100%",
-            maxWidth: "100%",
-            type: "area",
-            fontFamily: "Inter, sans-serif",
-            dropShadow: {
-                enabled: false,
-            },
-            toolbar: {
-                show: false,
-            },
-        },
-        tooltip: {
-            enabled: true,
-            x: {
-                show: false,
-            },
-        },
-        legend: {
-            show: true
-        },
-        fill: {
-            type: "gradient",
-            gradient: {
-                opacityFrom: 0.55,
-                opacityTo: 0,
-                shade: "#1C64F2",
-                gradientToColors: ["#1C64F2"],
-            },
-        },
-        stroke: {
-            width: 6,
-        },
-        xaxis: {
-            categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-            labels: {
-                show: false,
-            },
-            axisBorder: {
-                show: false,
-            },
-            axisTicks: {
-                show: false,
-            },
-        },
-        yaxis: {
-            show: false,
-            labels: {
-                formatter: function (value) {
-                    return '' + value;
-                }
-            }
-        },
-    }
-
-    if (document.getElementById("chart-1") && typeof ApexCharts !== 'undefined') {
-        const chart = new ApexCharts(document.getElementById("chart-1"), option_chart1);
-        chart.render();
-    };
-</script>
-<script>
-    const option_chart2 = {
-        // enable and customize data labels using the following example, learn more from here: https://apexcharts.com/docs/datalabels/
-        dataLabels: {
-            enabled: true,
-            // offsetX: 10,
-            style: {
-                cssClass: 'text-xs text-white font-medium'
-            },
-        },
-        grid: {
-            show: false,
-            strokeDashArray: 4,
-            padding: {
-                left: 16,
-                right: 16,
-                top: -26
-            },
-        },
-        series: [
-            {
-                name: "Part Per Million",
-                data: [4.5, 5.6, 5, 4.7, 5.5, 4.3],
-                color: "#7E3BF2",
-            },
-        ],
-        chart: {
-            height: "100%",
-            maxWidth: "100%",
-            type: "area",
-            fontFamily: "Inter, sans-serif",
-            dropShadow: {
-                enabled: false,
-            },
-            toolbar: {
-                show: false,
-            },
-        },
-        tooltip: {
-            enabled: true,
-            x: {
-                show: false,
-            },
-        },
-        legend: {
-            show: true
-        },
-        fill: {
-            type: "gradient",
-            gradient: {
-                opacityFrom: 0.55,
-                opacityTo: 0,
-                shade: "#1C64F2",
-                gradientToColors: ["#1C64F2"],
-            },
-        },
-        stroke: {
-            width: 6,
-        },
-        xaxis: {
-            categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-            labels: {
-                show: false,
-            },
-            axisBorder: {
-                show: false,
-            },
-            axisTicks: {
-                show: false,
-            },
-        },
-        yaxis: {
-            show: false,
-            labels: {
-                formatter: function (value) {
-                    return '' + value;
-                }
-            }
-        },
-    }
-
-    if (document.getElementById("chart-2") && typeof ApexCharts !== 'undefined') {
-        const chart = new ApexCharts(document.getElementById("chart-2"), option_chart2);
-        chart.render();
-    };
-</script>
-<script>
-    const option_chart3 = {
-        // enable and customize data labels using the following example, learn more from here: https://apexcharts.com/docs/datalabels/
-        dataLabels: {
-            enabled: true,
-            // offsetX: 10,
-            style: {
-                cssClass: 'text-xs text-white font-medium'
-            },
-        },
-        grid: {
-            show: false,
-            strokeDashArray: 4,
-            padding: {
-                left: 16,
-                right: 16,
-                top: -26
-            },
-        },
-        series: [
-            {
-                name: "Part Per Million",
-                data: [20, 16, 21, 17, 18, 20],
-                color: "#7E3BF2",
-            },
-        ],
-        chart: {
-            height: "100%",
-            maxWidth: "100%",
-            type: "area",
-            fontFamily: "Inter, sans-serif",
-            dropShadow: {
-                enabled: false,
-            },
-            toolbar: {
-                show: false,
-            },
-        },
-        tooltip: {
-            enabled: true,
-            x: {
-                show: false,
-            },
-        },
-        legend: {
-            show: true
-        },
-        fill: {
-            type: "gradient",
-            gradient: {
-                opacityFrom: 0.55,
-                opacityTo: 0,
-                shade: "#1C64F2",
-                gradientToColors: ["#1C64F2"],
-            },
-        },
-        stroke: {
-            width: 6,
-        },
-        xaxis: {
-            categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-            labels: {
-                show: false,
-            },
-            axisBorder: {
-                show: false,
-            },
-            axisTicks: {
-                show: false,
-            },
-        },
-        yaxis: {
-            show: false,
-            labels: {
-                formatter: function (value) {
-                    return '' + value;
-                }
-            }
-        },
-    }
-
-    if (document.getElementById("chart-3") && typeof ApexCharts !== 'undefined') {
-        const chart = new ApexCharts(document.getElementById("chart-3"), option_chart3);
-        chart.render();
-    };
-</script>
 
 </html>

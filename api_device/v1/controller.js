@@ -181,6 +181,9 @@ exports.userDeviceList = async (req, res) => {
                 kode_unik: true,
                 nama_alat: true,
             },
+            orderBy: {
+                id_perangkat: "desc",
+            },
         });
 
         return resSuccess({

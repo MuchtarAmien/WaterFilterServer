@@ -25,7 +25,7 @@ function handleDeviceChange(src) {
 
 function deviceOption(data, isChecked) {
     return `
-    <div class="flex items-center mb-3">
+    <div class="flex items-center mb-3 cursor-pointer">
         <input id="device-${data.kode_unik}" 
             ${isChecked ? "checked" : ""} 
             value="${data.kode_unik}"
@@ -35,7 +35,7 @@ function deviceOption(data, isChecked) {
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
         >
         <label for="device-${data.kode_unik}" 
-            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">
             ${data.nama_alat}
         </label>
     </div>
@@ -45,6 +45,14 @@ function deviceOption(data, isChecked) {
 function showUserDevice(data) {
     activeFilterContainer.textContent = data[0].nama_alat;
     activeFilter = data[0];
+    // Send Event To Render Data
+    let event = new CustomEvent("userChangeDevice", {
+        detail: {
+            data: data[0],
+        },
+    });
+    document.dispatchEvent(event);
+
     for (let i = 0; i < data.length; i++) {
         const device = data[i];
         deviceList.push(device);

@@ -19,6 +19,7 @@ exports.dashboard = async (req, res) => {
         const data = {
             scripts: [
                 "util/alertify.min.js",
+                "util/timeformater.js",
                 "util/httpRequest.js",
                 "device_dashboard_device_list.js",
                 "device_dashboard_show_data.js",
