@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
                 username,
                 email,
                 password: generateHash(password),
-                role: { connect: { name: "USER" } },
+                role: { connect: { name: "BASE" } },
                 passwordUpdatedAt: new Date(Date.now() - 1000),
                 profil: {
                     create: {

@@ -123,3 +123,47 @@ exports.generateRecord = async (req, res) => {
         return resError({ res, errors: error });
     }
 };
+
+exports.linkDeviceToUser = async (req, res) => {
+    try {
+        const { kode_unik, nama_perangkat } = req.body;
+        const userId = req.userId;
+
+        console.log("Request body:", req.body);
+        console.log("User ID:", userId);
+
+        // Cek Apakah Perangkat ada
+        const deviceExists = await prisma.perangkat.findUnique({
+            where: { kode_unik: kode_unik },
+        });
+        if (!deviceExists) throw "Perangkat tidak ditemukan";
+
+        const linkDevice = await prisma.perangkat.update({
+            where: {
+                id_perangkat: deviceExists.id_perangkat,
+            },
+            data: {
+                userId: userId,
+                nama_alat: nama_perangkat,
+            },
+            select: {
+                id_perangkat: true,
+                nama_alat: true,
+                kode_unik: true,
+                User: {
+                    select: {
+                        username: true,
+                    },
+                },
+            },
+        });
+
+        return resSuccess({
+            res,
+            title: "Success to link device with user",
+            data: linkDevice,
+        });
+    } catch (error) {
+        return resError({ res, errors: error });
+    }
+};
