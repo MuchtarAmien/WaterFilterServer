@@ -48,100 +48,32 @@
                         <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                         <img src="/Image/tidakterlihat.jpg" class="password-toggle" id="passwordToggle" alt="Password Visibility Toggle">
                     </div>
-                    <div class="relative z-0 w-full mb-5 group">
-                        <input type="password" name="repeat_password" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer" placeholder=" " required />
-                        <label for="floating_repeat_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
-                        <img src="/Image/tidakterlihat.jpg" class="password-toggle" id="confirmPasswordToggle" alt="Confirm Password Visibility Toggle">
-                    </div>
-                    <script>
-                        // JavaScript untuk menangani klik pada ikon mata password
-                        const passwordInput = document.getElementById("floating_password");
-                        const passwordToggle = document.getElementById("passwordToggle");
-                        passwordToggle.addEventListener("click", function() {
-                            if (passwordInput.type === "password") {
-                                passwordInput.type = "text";
-                                passwordToggle.src = "/Image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika password terlihat
-                            } else {
-                                passwordInput.type = "password";
-                                passwordToggle.src = "/Image/tidakterlihat.jpg"; // Ganti ikon mata ke "on" ketika password tidak terlihat
-                            }
-                        });
-                        // JavaScript untuk menangani klik pada ikon mata konfirmasi password
-                        const confirmPasswordInput = document.getElementById("floating_repeat_password");
-                        const confirmPasswordToggle = document.getElementById("confirmPasswordToggle");
-                        confirmPasswordToggle.addEventListener("click", function() {
-                            if (confirmPasswordInput.type === "password") {
-                                confirmPasswordInput.type = "text";
-                                confirmPasswordToggle.src = "/Image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika konfirmasi password terlihat
-                            } else {
-                                confirmPasswordInput.type = "password";
-                                confirmPasswordToggle.src = "/Image/tidakterlihat.jpg"; // Ganti ikon mata ke "on" ketika konfirmasi password tidak terlihat
-                            }
-                        });
-                        // JavaScript untuk menangani validasi password dan konfirmasi password
-                        const passwordField = document.getElementById("floating_password");
-                        const confirmPasswordField = document.getElementById("floating_repeat_password");
-                        const confirmPasswordLabel = document.querySelector("label[for='floating_repeat_password']");
-
-                        // Variabel untuk menandakan apakah password sudah terpakai atau tidak
-                        let passwordsMatch = false;
-
-                        passwordField.addEventListener("input", function() {
-                            const password = passwordField.value;
-                            const confirmPassword = confirmPasswordField.value;
-
-                            if (password === confirmPassword) {
-                                passwordsMatch = true;
-                            } else {
-                                passwordsMatch = false;
-                            }
-
-                            // Memanggil fungsi untuk menampilkan pesan sesuai dengan status passwordsMatch
-                            displayValidationMessage();
-                        });
-
-                        confirmPasswordField.addEventListener("input", function() {
-                            const password = passwordField.value;
-                            const confirmPassword = confirmPasswordField.value;
-
-                            if (password === confirmPassword) {
-                                passwordsMatch = true;
-                            } else {
-                                passwordsMatch = false;
-                            }
-
-                            // Memanggil fungsi untuk menampilkan pesan sesuai dengan status passwordsMatch
-                            displayValidationMessage();
-                        });
-
-                        // Fungsi untuk menampilkan pesan sesuai dengan status passwordsMatch
-                        function displayValidationMessage() {
-                            if (passwordsMatch) {
-                                confirmPasswordLabel.classList.remove("password-not-match"); // Hapus kelas CSS jika cocok
-                                confirmPasswordLabel.innerHTML = "Passwords match"; // Ubah teks label
-                                confirmPasswordLabel.style.color = "green"; // Ubah warna teks menjadi hijau
-                                confirmPasswordField.classList.remove("border-not-match"); // Hapus kelas CSS jika cocok
-                            } else {
-                                confirmPasswordLabel.classList.add("password-not-match"); // Tambah kelas CSS untuk label
-                                confirmPasswordLabel.innerHTML = "Passwords do not match"; // Ubah teks label
-                                confirmPasswordLabel.style.color = "red"; // Ubah warna teks menjadi merah
-                                confirmPasswordField.classList.add("border-not-match"); // Tambah kelas CSS untuk border
-                            }
-                        }
-                    </script>
-                    <div class="relative z-0 w-full mb-5 group">
-                        <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer" placeholder=" " required />
-                        <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number    </label>
-                    </div>
                     <button type="submit" class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">Submit</button>
             </form>
-  
             </div>
-
         </div>
     </div>
-    
 </body>
 
-<script src="/node_modules/flowbite/dist/flowbite.js"></script>
+<script>
+    // JavaScript untuk menangani klik pada ikon mata password
+    const passwordInput = document.getElementById("floating_password");
+    const passwordToggle = document.getElementById("passwordToggle");
+    passwordToggle.addEventListener("click", function() {
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            passwordToggle.src = "/Image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika password terlihat
+        } else {
+            passwordInput.type = "password";
+            passwordToggle.src = "/Image/tidakterlihat.jpg"; // Ganti ikon mata ke "on" ketika password tidak terlihat
+        }
+    });
+</script>
+
+{{#if scripts}}
+    {{#each scripts}}
+        <script src="/js/{{this}}"></script>
+    {{/each}}
+{{/if}}
+
 </html>
