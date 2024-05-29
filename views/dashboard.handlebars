@@ -46,30 +46,18 @@
                         </li>
                     </ul>
                 </div>
-                <button data-collapse-toggle="navbar-user" type="button"
-                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                    aria-controls="navbar-user" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 17 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 1h15M1 7h15M1 13h15" />
-                    </svg>
-                </button>
             </div>
     </nav>
     <div class="mt-8 max-w-screen-xl mx-6 lg:mx-auto">
         <div class="grid grid-cols-5 gap-5">
             <div
                 class="col-span-5 md:col-span-1 z-[1002] h-[100px] rounded-lg px-2 py-1 border drop-shadow-md bg-white">
-                <h2 class="mt-2 font-semibold">Filter 1</h2>
+                <h2 class="mt-2 font-semibold" id="active-filter" data-filter-id="">Loading...</h2>
                 <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch" data-dropdown-placement="bottom"
                     class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     type="button">Pilih Filter
-                    <svg class="w-2.5 h-2.5 ms-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
+                    <svg class="w-2.5 h-2.5 ms-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
                     </svg>
                 </button>
                 <!-- Dropdown menu -->
@@ -91,21 +79,8 @@
                                 placeholder="Search user">
                         </div>
                     </div>
-                    <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownRadioButton">
-                        <li>
-                            <div class="flex items-center mb-3">
-                                <input id="default-radio-1" type="radio" value="" name="default-radio"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                <label for="default-radio-1"
-                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Filter 1</label>
-                            </div>
-                            <div class="flex items-center mb-3">
-                                <input id="default-radio-1" type="radio" value="" name="default-radio"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                <label for="default-radio-1"
-                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Filter 2</label>
-                            </div>
+                    <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+                        <li id="filter-container">
                         </li>
                     </ul>
                     <a href="/device/pairing/"
@@ -161,39 +136,6 @@
 
                     <!-- Elemen HTML untuk menampilkan nilai TDS -->
                     <p class="text-center">TDS Value: <span id="tdsValue">Loading...</span> ppm</p>
-
-                    <!-- Script JavaScript untuk menghubungkan ke broker MQTT dan memperbarui nilai -->
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.7/mqtt.min.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.7/mqtt.min.js"></script>
-                    <script>
-                        // Konfigurasi koneksi MQTT
-                        const mqttBroker = 'wss://068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud';
-                        const mqttPort = 8883; // Port MQTT
-
-                        const options = {
-                            protocol: 'mqtts',
-                            clientId: 'web-client', // ID klien Anda
-                            username: 'muchtar123',
-                            password: 'Muchtar123'
-                        };
-
-                        // Inisialisasi koneksi MQTT
-                        const client = mqtt.connect(mqttBroker + ':' + mqttPort, options);
-
-                        client.on('connect', function () {
-                            console.log('Connected to MQTT broker');
-                            client.subscribe('tdsValue');
-                        });
-
-                        client.on('message', function (topic, message) {
-                            if (topic === 'tdsValue') {
-                                const tdsValue = message.toString();
-                                // Update konten elemen HTML dengan id 'tdsValue'
-                                document.getElementById('tdsValue').textContent = tdsValue;
-                            }
-                        });
-                    </script>
-
                 </div>
             </div>
             <div
@@ -273,31 +215,6 @@
                             fill="black" />
                     </svg>
                     <p class="text-center"><span id="turbidityValue"></span> NTU</p>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.7/mqtt.min.js"></script>
-                    <script>
-                        // Inisialisasi koneksi MQTT
-                        const mqttBroker = 'wss://068b2e83115c4ff99fd703a20d77ab14.s1.eu.hivemq.cloud:8883';
-                        const options = {
-                            protocol: 'mqtts',
-                            clientId: 'web-client', // ID klien Anda
-                            username: 'muchtar123',
-                            password: 'Muchtar123'
-                        };
-                        const client = mqtt.connect(mqttBroker, options);
-
-                        client.on('connect', function () {
-                            console.log('Connected to MQTT broker');
-                            client.subscribe('turbidityValue');
-                        });
-
-                        client.on('message', function (topic, message) {
-                            if (topic === 'turbidityValue') {
-                                const turbidityValue = message.toString();
-                                // Update konten elemen HTML dengan id 'turbidityValue'
-                                document.getElementById('turbidityValue').textContent = turbidityValue;
-                            }
-                        });
-                    </script>
                 </div>
             </div>
             <div
@@ -514,6 +431,11 @@
 
 <script src="/js/flowbite.js"></script>
 <script src="/js/apexcharts.js"></script>
+{{#if scripts}}
+    {{#each scripts}}
+        <script src="/js/{{this}}"></script>
+    {{/each}}
+{{/if}}
 <script>
     // set the target element that will be collapsed or expanded (eg. navbar menu)
     const $targetEl = document.getElementById('targetEl');

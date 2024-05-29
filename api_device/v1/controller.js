@@ -167,3 +167,27 @@ exports.linkDeviceToUser = async (req, res) => {
         return resError({ res, errors: error });
     }
 };
+
+exports.userDeviceList = async (req, res) => {
+    try {
+        const userId = req.userId;
+        console.log("User ID: ", userId);
+        const userDevice = await prisma.perangkat.findMany({
+            where: {
+                userId: userId,
+            },
+            select: {
+                id_perangkat: true,
+                nama_alat: true,
+            },
+        });
+
+        return resSuccess({
+            res,
+            title: "Success to show user device",
+            data: userDevice,
+        });
+    } catch (error) {
+        return resError({ res, errors: error });
+    }
+};
