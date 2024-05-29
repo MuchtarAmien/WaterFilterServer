@@ -192,3 +192,40 @@ exports.userDeviceList = async (req, res) => {
         return resError({ res, errors: error });
     }
 };
+
+exports.deviceHistory = async (req, res) => {
+    try {
+        const { kode_unik, tanggal_awal, tanggal_akhir } = req.query;
+        console.log("Kode Unik Perangkat: ", kode_unik);
+        console.log("Tanggal Awal: ", tanggal_awal);
+        console.log("Tanggal Akhir: ", tanggal_akhir);
+
+        const device = await prisma.perangkat.findUnique({
+            where: {
+                kode_unik,
+            },
+        });
+
+        if (!device) throw "Device Tidak Ditemukan";
+
+        const deviceHistory = await prisma.riwayat.findMany({
+            where: {
+                id_perangkatr: device.id_perangkat,
+                createdAt: {
+                    gte: tanggal_awal
+                        ? new Date(tanggal_awal)
+                        : new Date(new Date().setDate(new Date().getDay() - 7)),
+                    lte: tanggal_akhir ? new Date(tanggal_akhir) : new Date(),
+                },
+            },
+        });
+
+        return resSuccess({
+            res,
+            title: "Success to show user device",
+            data: deviceHistory,
+        });
+    } catch (error) {
+        return resError({ res, errors: error });
+    }
+};
