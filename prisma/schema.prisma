@@ -35,7 +35,6 @@ model User {
   roleId            String
   profil            Profil?
   perangkat         Perangkat[]
-  Riwayat           Riwayat[]
 }
 
 model Profil {
@@ -53,9 +52,9 @@ model Perangkat {
   nama_alat        String    @unique
   kode_unik        String    @unique
   control_motor_dc Boolean
-  monitor_tds      Float
-  monitor_ph       Float
-  monior_kekeruhan Float
+  monitor_tds      String?
+  monitor_ph       String?
+  monior_kekeruhan String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
   User             User?     @relation(fields: [userId], references: [id])
@@ -65,13 +64,11 @@ model Perangkat {
 
 model Riwayat {
   id_riwayat       Int        @id @default(autoincrement())
-  monitor_tds      Float
-  monitor_ph       Float
-  monior_kekeruhan Float
+  monitor_tds      String
+  monitor_ph       String
+  monior_kekeruhan String
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
-  User             User?      @relation(fields: [userId], references: [id])
-  userId           String?
   Perangkat        Perangkat? @relation(fields: [id_perangkatr], references: [id_perangkat])
   id_perangkatr    Int?
 }

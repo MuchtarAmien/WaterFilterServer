@@ -1,0 +1,12 @@
+-- AlterTable
+ALTER TABLE "Perangkat" ALTER COLUMN "monitor_tds" DROP NOT NULL,
+ALTER COLUMN "monitor_tds" SET DATA TYPE TEXT,
+ALTER COLUMN "monitor_ph" DROP NOT NULL,
+ALTER COLUMN "monitor_ph" SET DATA TYPE TEXT,
+ALTER COLUMN "monior_kekeruhan" DROP NOT NULL,
+ALTER COLUMN "monior_kekeruhan" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Riwayat" ALTER COLUMN "monitor_tds" SET DATA TYPE TEXT,
+ALTER COLUMN "monitor_ph" SET DATA TYPE TEXT,
+ALTER COLUMN "monior_kekeruhan" SET DATA TYPE TEXT;
