@@ -13,7 +13,14 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-        return res.render("login");
+        const data = {
+            scripts: [
+                "util/alertify.min.js",
+                "util/httpRequest.js",
+                "user_login.js",
+            ],
+        };
+        return res.render("login", data);
     } catch (error) {
         return resError({ res, errors: error });
     }
@@ -25,4 +32,8 @@ exports.setting = async (req, res) => {
     } catch (error) {
         return resError({ res, errors: error });
     }
+};
+
+exports.logout = (req, res) => {
+    res.cookie("Authorization", "", { maxAge: 1 }).redirect("/user/login");
 };
