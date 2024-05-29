@@ -178,6 +178,7 @@ exports.userDeviceList = async (req, res) => {
             },
             select: {
                 id_perangkat: true,
+                kode_unik: true,
                 nama_alat: true,
             },
         });

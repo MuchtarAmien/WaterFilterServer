@@ -21,6 +21,7 @@ exports.dashboard = async (req, res) => {
                 "util/alertify.min.js",
                 "util/httpRequest.js",
                 "device_dashboard_device_list.js",
+                "device_dashboard_show_data.js",
             ],
         };
         return res.render("dashboard", data);
