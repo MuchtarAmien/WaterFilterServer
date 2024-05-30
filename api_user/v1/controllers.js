@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
                 username,
                 email,
                 password: generateHash(password),
-                role: { connect: { name: "BASE" } },
+                role: { connect: { name: 'BASE' } },
                 passwordUpdatedAt: new Date(Date.now() - 1000),
                 profil: {
                     create: {
@@ -43,13 +43,8 @@ exports.register = async (req, res) => {
             },
         });
 
-        setCookie({
-            res,
-            title: "Authorization",
-            data: generateAuthorizationToken({
-                data: { userID: newUser.id, username: newUser.username },
-            }),
-        });
+        // Hapus token autentikasi (jika ada) setelah registrasi
+        res.clearCookie("auth_token")
 
         return resSuccess({
             res,

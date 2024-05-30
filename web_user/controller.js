@@ -3,7 +3,11 @@ const { resError, resSuccess } = require("../services/responseHandler");
 exports.signup = async (req, res) => {
     try {
         const data = {
-            scripts: ["user_register.js"],
+            scripts: [
+                "util/alertify.min.js",
+                "util/httpRequest.js",
+                "user_register.js",
+            ],
         };
         return res.render("register", data);
     } catch (error) {
