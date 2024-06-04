@@ -22,9 +22,9 @@ exports.generateDeviceId = async (req, res) => {
                 kode_unik: kodeUnikPerangkat,
                 nama_alat: kodeUnikPerangkat,
                 control_motor_dc: false,
-                monior_kekeruhan: 0, // Pastikan nama kolomnya benar
-                monitor_ph: 0,
-                monitor_tds: 0,
+                monior_kekeruhan: "0", // Pastikan nama kolomnya benar
+                monitor_ph: "0",
+                monitor_tds: "0",
             },
         });
 
