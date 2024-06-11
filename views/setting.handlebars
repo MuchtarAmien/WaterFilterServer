@@ -1,130 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css/style.v1.0.0.css">
     <title>Setting Profile</title>
     <style>
         .profile-icon-container {
-            display: flex; /* Mengatur tata letak elemen secara flex */
-            flex-direction: column; /* Menata elemen secara vertikal */
+            display: flex;
+            /* Mengatur tata letak elemen secara flex */
+            flex-direction: column;
+            /* Menata elemen secara vertikal */
         }
-        
+
         .profile-icon {
-            width: 200px; /* ubah    sesuai kebutuhan */
-            height: 200px; /* ubah sesuai kebutuhan */
-            border-radius: 100%; /* membuat icon profil menjadi lingkaran */
+            width: 200px;
+            /* ubah    sesuai kebutuhan */
+            height: 200px;
+            /* ubah sesuai kebutuhan */
+            border-radius: 100%;
+            /* membuat icon profil menjadi lingkaran */
             /* mengatur gambar agar sesuai dengan ukuran icon */
         }
-        
+
         #edit-button {
-            background-color: #D9D9D9; /* Warna latar hijau */
-            color: #9D9D9D; /* Warna teks putih */
-            padding: 8px 55px; /* Ruang bantal pada tombol */
-            text-align: center; /* Teks ditengah */
+            background-color: #D9D9D9;
+            /* Warna latar hijau */
+            color: #9D9D9D;
+            /* Warna teks putih */
+            padding: 8px 55px;
+            /* Ruang bantal pada tombol */
+            text-align: center;
+            /* Teks ditengah */
             text-decoration: none;
-            font-size: 16px; /* Ukuran teks */
-            cursor: pointer; /* Kursor berbentuk tangan saat diarahkan */
-            border: none; /* Tanpa border */
-            border-radius: 20px; /* Membuat sudut kotak tanpa meruncing */
-        }        
-        
+            font-size: 16px;
+            /* Ukuran teks */
+            cursor: pointer;
+            /* Kursor berbentuk tangan saat diarahkan */
+            border: none;
+            /* Tanpa border */
+            border-radius: 20px;
+            /* Membuat sudut kotak tanpa meruncing */
+        }
+
         #edit-button:hover {
-            background-color: #A3A3A3; /* Warna latar hijau yang lebih gelap saat dihover */
+            background-color: #A3A3A3;
+            /* Warna latar hijau yang lebih gelap saat dihover */
             color: #E7E7E7;
         }
-                /* CSS untuk mengatur tampilan ikon mata */
+
+        /* CSS untuk mengatur tampilan ikon mata */
         .password-toggle {
             position: absolute;
             right: 10px;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            width: 20px; /* Lebar ikon */
-            height: auto; /* Tinggi ikon menyesuaikan proporsi */
+            width: 20px;
+            /* Lebar ikon */
+            height: auto;
+            /* Tinggi ikon menyesuaikan proporsi */
         }
+
         .password-not-match {
-            color: red; /* Warna teks merah */
+            color: red;
+            /* Warna teks merah */
         }
-    
+
         .border-not-match {
-            border-color: red !important; /* Warna border merah */
-        }        /* CSS untuk mengatur tampilan ikon mata */
+            border-color: red !important;
+            /* Warna border merah */
+        }
+
+        /* CSS untuk mengatur tampilan ikon mata */
         .password-toggle {
             position: absolute;
             right: 10px;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            width: 20px; /* Lebar ikon */
-            height: auto; /* Tinggi ikon menyesuaikan proporsi */
+            width: 20px;
+            /* Lebar ikon */
+            height: auto;
+            /* Tinggi ikon menyesuaikan proporsi */
         }
+
         .password-not-match {
-            color: red; /* Warna teks merah */
+            color: red;
+            /* Warna teks merah */
         }
-    
+
         .border-not-match {
-            border-color: red !important; /* Warna border merah */
+            border-color: red !important;
+            /* Warna border merah */
         }
-        
-      </style>
+    </style>
 </head>
+
 <body>
-    <div class="max-w-screen-xl mx-5 xl:mx-auto" >
-        <div class = "grid grid-cols-2">
-            <div class = "col-span-2 md:col-span-1">
-                <div class="font-bold block py-3 profile-icon-container"  style="margin-top: 100px; margin-left:150px">
+    <div class="max-w-screen-xl mx-5 xl:mx-auto">
+        <div class="grid grid-cols-2">
+            <div class="col-span-2 md:col-span-1">
+                <div class="font-bold block py-3 profile-icon-container" style="margin-top: 100px; margin-left:150px">
                     <!-- Tag img dengan class "profile-icon" -->
-                    <img id="profile-icon" class="profile-icon flex items-center justify-center" src="/image/profile.png" alt="Profile Picture">
-        
+                    <img id="profile-icon" class="profile-icon flex items-center justify-center"
+                        src="/image/profile.png" alt="Profile Picture">
+
                     <div class="mt-5" style=" margin-left:30px"> <!-- Tambahkan margin top 5 (atau disesuaikan) -->
                         <label for="file-input" id="edit-button">Edit</label>
-                        <input type="file" id="file-input" accept="image/*" onchange="previewProfilePicture(event)" style="display: none;">
+                        <input type="file" id="file-input" accept="image/*" onchange="previewProfilePicture(event)"
+                            style="display: none;">
                     </div>
                 </div>
                 <script>
                     function previewProfilePicture(event) {
                         var input = event.target;
                         var reader = new FileReader();
-                        reader.onload = function(){
-                          var profileIcon = document.getElementById('profile-icon');
-                          profileIcon.src = reader.result;
+                        reader.onload = function () {
+                            var profileIcon = document.getElementById('profile-icon');
+                            profileIcon.src = reader.result;
                         };
                         reader.readAsDataURL(input.files[0]);
-                      }
+                    }
                 </script>
             </div>
             <div class="col-span-2 flex items-center justify-center md:col-span-1 h-screen">
-                <div class="w-80" md:style = "margin-left: -200px;">
-                    <h2 class="font-bold block" style="font-size: 2rem;"> <!-- Mengubah ukuran teks menjadi 2xl (contoh: dua kali lipat dari ukuran normal) dan menggeser ke kiri -->
+                <div class="w-80" md:style="margin-left: -200px;">
+                    <h2 class="font-bold block" style="font-size: 2rem;">
+                        <!-- Mengubah ukuran teks menjadi 2xl (contoh: dua kali lipat dari ukuran normal) dan menggeser ke kiri -->
                         My Profile
                     </h2>
                     <form class="max-w-md mx-auto">
                         <div class="relative z-0 w-full mb-5 group">
-                            <input type="text" name="floating_full_name" id="floating_full_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer" placeholder=" " required />
-                            <label for="floating_full_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Full name</label>
+                            <input type="text" name="floating_full_name" id="floating_full_name"
+                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_full_name"
+                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Full
+                                name</label>
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
-                            <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer" placeholder=" " required />
-                            <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                            <input type="email" name="floating_email" id="floating_email"
+                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_email"
+                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
+                                address</label>
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
-                            <input type="password" name="floating_password" id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer" placeholder=" " required />
-                            <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
-                            <img src="/Image/tidakterlihat.jpg" class="password-toggle" id="passwordToggle" alt="Password Visibility Toggle">
+                            <input type="password" name="floating_password" id="floating_password"
+                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_password"
+                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                            <img src="/Image/tidakterlihat.jpg" class="password-toggle" id="passwordToggle"
+                                alt="Password Visibility Toggle">
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
-                            <input type="password" name="repeat_password" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer" placeholder=" " required />
-                            <label for="floating_repeat_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
-                            <img src="/Image/tidakterlihat.jpg" class="password-toggle" id="changePasswordToggle" alt="Confirm Password Visibility Toggle">
+                            <input type="password" name="repeat_password" id="floating_repeat_password"
+                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_repeat_password"
+                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
+                                password</label>
+                            <img src="/Image/tidakterlihat.jpg" class="password-toggle" id="changePasswordToggle"
+                                alt="Confirm Password Visibility Toggle">
                         </div>
                         <script>
                             // JavaScript untuk menangani klik pada ikon mata password
                             const passwordInput = document.getElementById("floating_password");
                             const passwordToggle = document.getElementById("passwordToggle");
-                            passwordToggle.addEventListener("click", function() {
+                            passwordToggle.addEventListener("click", function () {
                                 if (passwordInput.type === "password") {
                                     passwordInput.type = "text";
                                     passwordToggle.src = "/Image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika password terlihat
@@ -136,7 +186,7 @@
                             // JavaScript untuk menangani klik pada ikon mata konfirmasi password
                             const changePasswordInput = document.getElementById("floating_repeat_password");
                             const changePasswordToggle = document.getElementById("changePasswordToggle");
-                            changePasswordToggle.addEventListener("click", function() {
+                            changePasswordToggle.addEventListener("click", function () {
                                 if (changePasswordInput.type === "password") {
                                     changePasswordInput.type = "text";
                                     changePasswordToggle.src = "/Image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika konfirmasi password terlihat
@@ -150,7 +200,7 @@
                             const changePasswordField = document.getElementById("floating_repeat_password");
                             const changePasswordLabel = document.querySelector("label[for='floating_repeat_password']");
 
-                            changePasswordField.addEventListener("input", function() {
+                            changePasswordField.addEventListener("input", function () {
                                 const password = passwordField.value;
                                 const changePassword = changePasswordField.value;
 
@@ -167,18 +217,16 @@
                                 }
                             });
                         </script>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer" placeholder=" " required />
-                            <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number    </label>
-                        </div>
-                        <button type="submit" class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">Submit</button>
-                </form>
+                        <button type="submit"
+                            class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">Submit</button>
+                    </form>
                 </div>
-            </div>               
+            </div>
         </div>
     </div>
-    
+
 </body>
 
 <script src="/node_modules/flowbite/dist/flowbite.js"></script>
+
 </html>
