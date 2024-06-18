@@ -147,7 +147,6 @@ function showData(data) {
 }
 
 function renderSocketData(data) {
-    console.log(data);
     monitor_ph.push(data?.monitor_ph);
     monitor_tds.push(data?.monitor_tds);
     monior_kekeruhan.push(data?.monior_kekeruhan);
