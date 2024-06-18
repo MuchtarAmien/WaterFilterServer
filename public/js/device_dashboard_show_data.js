@@ -9,6 +9,15 @@ const monitor_ph = [];
 const monitor_tds = [];
 const monior_kekeruhan = [];
 const datetime = [];
+const motorToggle = document.getElementById("motorToggle");
+const tdsValueContainer = document.getElementById("tdsValue");
+const phValueContainer = document.getElementById("phValue");
+const turbidityValueContainer = document.getElementById("turbidityValue");
+const tdsValuePlaceholder = document.getElementById("tdsPlaceholder");
+const phValuePlaceholder = document.getElementById("phPlaceholder");
+const turbidityValuePlaceholder = document.getElementById(
+    "turbidityPlaceholder"
+);
 let lastDeviceId = "";
 
 let chartTds, chartPh, chartTurbidity;
@@ -168,15 +177,30 @@ function renderSocketData(data) {
     });
 }
 
+function setHeaderInfo(data) {
+    motorToggle.checked = data.control_motor_dc;
+    tdsValueContainer.textContent = data.monitor_tds;
+    phValueContainer.textContent = data.monitor_ph;
+    turbidityValueContainer.textContent = data.monior_kekeruhan;
+    tdsValuePlaceholder.textContent = data.monitor_tds;
+    phValuePlaceholder.textContent = data.monitor_ph;
+    turbidityValuePlaceholder.textContent = data.monior_kekeruhan;
+}
+
 let socket = io();
 document.addEventListener("userChangeDevice", (e) => {
-    const finalUrl = `/api/v1/device/history?kode_unik=${e.detail?.data?.kode_unik}&tanggal_akhir=${currentDate}&tanggal_awal=${lastWeek}`;
+    const kode_unik = e.detail?.data?.kode_unik;
+    const finalUrl = `/api/v1/device/history?kode_unik=${kode_unik}&tanggal_akhir=${currentDate}&tanggal_awal=${lastWeek}`;
     generalDataLoader({
         url: finalUrl,
         func: showData,
     });
+    generalDataLoader({
+        url: `/api/v1/device/info/${kode_unik}`,
+        func: setHeaderInfo,
+    });
 
-    if (lastDeviceId != "" && lastDeviceId != e.detail?.data?.kode_unik) {
+    if (lastDeviceId != "" && lastDeviceId != kode_unik) {
         socket.off(`/monitoring/${lastDeviceId}`, renderSocketData);
         socket.off();
         socket.offAny(renderSocketData);
@@ -185,6 +209,6 @@ document.addEventListener("userChangeDevice", (e) => {
         socket.offAnyOutgoing();
     }
     socket.on("connect", () => {});
-    socket.on(`/monitoring/${e.detail?.data?.kode_unik}`, renderSocketData);
-    lastDeviceId = e.detail?.data?.kode_unik;
+    socket.on(`/monitoring/${kode_unik}`, renderSocketData);
+    lastDeviceId = kode_unik;
 });

@@ -170,6 +170,26 @@ exports.linkDeviceToUser = async (req, res) => {
     }
 };
 
+exports.deviceDetail = async (req, res) => {
+    try {
+        const kode_unik = req.params.kode_unik;
+
+        const deviceExists = await prisma.perangkat.findUnique({
+            where: { kode_unik: kode_unik },
+        });
+
+        if (!deviceExists) throw "Device not found";
+
+        return resSuccess({
+            res,
+            title: "Success get device Info",
+            data: deviceExists,
+        });
+    } catch (error) {
+        return resError({ res, errors: error });
+    }
+};
+
 exports.userDeviceList = async (req, res) => {
     try {
         const userId = req.userId;

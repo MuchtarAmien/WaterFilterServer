@@ -1,5 +1,4 @@
-const motorToggle = document.getElementById("motorToggle");
-
+// motorToggle from show_data.js
 motorToggle.addEventListener("change", async (e) => {
     const resp = await httpRequest({
         url: "/api/v1/device/toggle",
