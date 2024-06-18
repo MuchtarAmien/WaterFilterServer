@@ -3,16 +3,27 @@ const cors = require("cors");
 const expbs = require("express-handlebars");
 const cookieParser = require("cookie-parser");
 const express = require("express");
+const { MqttServer } = require("./services/mqttserver");
 const app = express();
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
 const PORT = process.env.PORT || 8080;
 const ROUTER = require("./router");
+
+MqttServer.createConnection();
+MqttServer.setSocket(io);
+
+io.on("connection", (socket) => {
+    console.log("A socket client connected => ", socket.id);
+});
+
 app.engine(
     "handlebars",
     expbs.engine({ extname: ".handlebars", defaultLayout: "" })
 );
+app.io = io;
 app.set("views", "views");
 app.set("view engine", "handlebars");
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
@@ -21,6 +32,6 @@ app.use("/", ROUTER);
 app.use(express.static("public"));
 app.use("/static", express.static("public"));
 
-app.listen(PORT, () => {
+http.listen(PORT, () => {
     console.log(`🚀 SERVER RUNNING IN PORT ${PORT}`);
 });

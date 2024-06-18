@@ -93,6 +93,8 @@ exports.generateRecord = async (req, res) => {
 
         // Dapatkan waktu sekarang
         const now = new Date();
+        req.body.createdAt = now;
+        req.app.io.emit(`/monitoring/${kode_unik}`, req.body);
 
         // Periksa apakah ada entri dan selisih waktunya lebih dari satu menit
         if (!recentRecord || now - new Date(recentRecord.createdAt) > 60000) {

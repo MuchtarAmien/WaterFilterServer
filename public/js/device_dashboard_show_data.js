@@ -9,6 +9,9 @@ const monitor_ph = [];
 const monitor_tds = [];
 const monior_kekeruhan = [];
 const datetime = [];
+let lastDeviceId = "";
+
+let chartTds, chartPh, chartTurbidity;
 
 function renderGraph({ id, seriesName, seriesData, labels }) {
     let chart;
@@ -89,6 +92,23 @@ function renderGraph({ id, seriesName, seriesData, labels }) {
         chart = new ApexCharts(document.getElementById(id), chartOption);
         chart.render();
     }
+
+    return chart;
+}
+
+function updateGraph(chart, newData) {
+    chart.updateOptions({
+        xaxis: {
+            categories: newData.labels,
+        },
+    });
+
+    chart.updateSeries([
+        {
+            // name: 'Series 1',
+            data: newData.seriesData,
+        },
+    ]);
 }
 
 function showData(data) {
@@ -104,21 +124,21 @@ function showData(data) {
         datetime.push(days(d?.createdAt));
     }
 
-    renderGraph({
+    chartTds = renderGraph({
         id: "chart-tds",
         seriesName: "PPM",
         seriesData: monitor_tds,
         labels: datetime,
     });
 
-    renderGraph({
+    chartPh = renderGraph({
         id: "chart-ph",
         seriesName: "PH",
         seriesData: monitor_ph,
         labels: datetime,
     });
 
-    renderGraph({
+    chartTurbidity = renderGraph({
         id: "chart-turbidity",
         seriesName: "BTU",
         seriesData: monior_kekeruhan,
@@ -126,10 +146,46 @@ function showData(data) {
     });
 }
 
+function renderSocketData(data) {
+    console.log(data);
+    monitor_ph.push(data?.monitor_ph);
+    monitor_tds.push(data?.monitor_tds);
+    monior_kekeruhan.push(data?.monior_kekeruhan);
+    datetime.push(days(data?.createdAt));
+
+    updateGraph(chartPh, {
+        labels: datetime,
+        seriesData: monitor_ph,
+    });
+
+    updateGraph(chartTds, {
+        labels: datetime,
+        seriesData: monitor_tds,
+    });
+
+    updateGraph(chartTurbidity, {
+        labels: datetime,
+        seriesData: monior_kekeruhan,
+    });
+}
+
+let socket = io();
 document.addEventListener("userChangeDevice", (e) => {
     const finalUrl = `/api/v1/device/history?kode_unik=${e.detail?.data?.kode_unik}&tanggal_akhir=${currentDate}&tanggal_awal=${lastWeek}`;
     generalDataLoader({
         url: finalUrl,
         func: showData,
     });
+
+    if (lastDeviceId != "" && lastDeviceId != e.detail?.data?.kode_unik) {
+        socket.off(`/monitoring/${lastDeviceId}`, renderSocketData);
+        socket.off();
+        socket.offAny(renderSocketData);
+        socket.offAny();
+        socket.offAnyOutgoing(renderSocketData);
+        socket.offAnyOutgoing();
+    }
+    socket.on("connect", () => {});
+    socket.on(`/monitoring/${e.detail?.data?.kode_unik}`, renderSocketData);
+    lastDeviceId = e.detail?.data?.kode_unik;
 });
