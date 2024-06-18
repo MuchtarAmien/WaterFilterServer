@@ -23,6 +23,7 @@ exports.dashboard = async (req, res) => {
                 "util/httpRequest.js",
                 "device_dashboard_device_list.js",
                 "device_dashboard_show_data.js",
+                "device_dashboard_device_controll.js",
             ],
         };
         return res.render("dashboard", data);

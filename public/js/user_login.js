@@ -19,7 +19,6 @@ loginButton.addEventListener("click", async (e) => {
         window.location = "/";
     }
 
-    console.log(alertify);
     if (!resp.success) {
         console.log("GAGAL");
         alertify.set("notifier", "position", "top-right");
