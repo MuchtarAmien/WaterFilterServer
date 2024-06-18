@@ -8,10 +8,11 @@ const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const PORT = process.env.PORT || 8080;
-const ROUTER = require("./router");
+const { router: ROUTER, mqttTopic } = require("./router");
 
 MqttServer.createConnection();
 MqttServer.setSocket(io);
+MqttServer.use(mqttTopic);
 
 io.on("connection", (socket) => {
     console.log("A socket client connected => ", socket.id);
