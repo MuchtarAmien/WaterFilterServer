@@ -23,6 +23,7 @@ app.engine(
     expbs.engine({ extname: ".handlebars", defaultLayout: "" })
 );
 app.io = io;
+app.mqttpublish = MqttServer.response;
 app.set("views", "views");
 app.set("view engine", "handlebars");
 app.use(express.urlencoded({ extended: false }));

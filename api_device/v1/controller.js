@@ -315,3 +315,39 @@ exports.generateRecordMqtt = async (payload, res) => {
         return;
     }
 };
+
+exports.toggleDevice = async (req, res) => {
+    const { kode_unik, isTurnOn } = req.body;
+
+    try {
+        const device = await prisma.perangkat.findUnique({
+            where: {
+                kode_unik,
+            },
+        });
+
+        if (!device) throw "Device Tidak Ditemukan";
+
+        await prisma.perangkat.update({
+            where: {
+                id_perangkat: device.id_perangkat,
+            },
+            data: {
+                control_motor_dc: isTurnOn,
+            },
+        });
+
+        let statusMotor = isTurnOn ? "Menyalakan" : "Mematikan";
+        await req.app.mqttpublish(
+            `/device/controll/${kode_unik}`,
+            JSON.stringify({ isTurnOn })
+        );
+        return resSuccess({
+            res,
+            title: `Berhasil untuk ${statusMotor} Motor`,
+            data: null,
+        });
+    } catch (error) {
+        return resError({ res, errors: error });
+    }
+};

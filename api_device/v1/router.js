@@ -10,6 +10,7 @@ const {
     userDeviceList,
     deviceHistory,
     generateRecordMqtt,
+    toggleDevice,
 } = require("./controller");
 
 router.get("/", deviceList);
@@ -18,6 +19,7 @@ router.get("/history", loginRequired, deviceHistory);
 router.post("/link", loginRequired, linkDeviceToUser);
 router.post("/record", generateRecord);
 router.post("/", generateDeviceId);
+router.post("/toggle", toggleDevice);
 mqttTopic.listener("/update/record/", generateRecordMqtt);
 
 module.exports = { router, mqttTopic };
