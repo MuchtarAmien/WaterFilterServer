@@ -87,15 +87,9 @@ router
 router.post(
     "/update/profile",
     loginRequired,
-    body("username")
-        .notEmpty()
-        .isLength({ min: 3 })
-        .withMessage("Username minimal 3 character")
-        .not()
-        .contains(" ")
-        .withMessage("Username can't contain space"),
-    body("email").notEmpty().isEmail().withMessage("Email required"),
-    body("full_name").notEmpty().withMessage("Full name required"),
+    body("username").notEmpty().withMessage("Full name is required"),
+    body("email").notEmpty().isEmail().withMessage("Valid email is required"),
+    body("password").optional().isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
     formChacker,
     controllers.profileUpdate
 );

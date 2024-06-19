@@ -8,6 +8,7 @@
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/css/style.v1.0.0.css">
+    <link rel="stylesheet" href="/css/alertify.min.css">
     <title>Setting Profile</title>
     <style>
         .profile-icon-container {
@@ -106,11 +107,10 @@
         <div class="grid grid-cols-2">
             <div class="col-span-2 md:col-span-1">
                 <div class="font-bold block py-3 profile-icon-container" style="margin-top: 100px; margin-left:150px">
-                    <!-- Tag img dengan class "profile-icon" -->
-                    <img id="profile-icon" class="profile-icon flex items-center justify-center"
+                    <img id="profile-picture" class="profile-icon flex items-center justify-center"
                         src="/image/profile.png" alt="Profile Picture">
 
-                    <div class="mt-5" style=" margin-left:30px"> <!-- Tambahkan margin top 5 (atau disesuaikan) -->
+                    <div class="mt-5" style="margin-left:30px">
                         <label for="file-input" id="edit-button">Edit</label>
                         <input type="file" id="file-input" accept="image/*" onchange="previewProfilePicture(event)"
                             style="display: none;">
@@ -121,12 +121,13 @@
                         var input = event.target;
                         var reader = new FileReader();
                         reader.onload = function () {
-                            var profileIcon = document.getElementById('profile-icon');
-                            profileIcon.src = reader.result;
+                            var profilePicture = document.getElementById('profile-picture');
+                            profilePicture.src = reader.result;
                         };
                         reader.readAsDataURL(input.files[0]);
                     }
                 </script>
+
             </div>
             <div class="col-span-2 flex items-center justify-center md:col-span-1 h-screen">
                 <div class="w-80" md:style="margin-left: -200px;">
@@ -136,12 +137,11 @@
                     </h2>
                     <form class="max-w-md mx-auto">
                         <div class="relative z-0 w-full mb-5 group">
-                            <input type="text" name="floating_full_name" id="floating_full_name"
+                            <input type="text" name="floating_username" id="floating_username"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
                                 placeholder=" " required />
-                            <label for="floating_full_name"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Full
-                                name</label>
+                            <label for="floating_username"
+                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
                             <input type="email" name="floating_email" id="floating_email"
@@ -204,9 +204,26 @@
                                 const password = passwordField.value;
                                 const changePassword = changePasswordField.value;
 
-                                if (password === changePassword) {
+                                if (password !== changePassword) {
                                     changePasswordLabel.classList.add("password-not-match"); // Tambah kelas CSS untuk label
-                                    changePasswordLabel.innerHTML = "Password already in use"; // Ubah teks label
+                                    changePasswordLabel.innerHTML = "Passwords do not match"; // Ubah teks label
+                                    changePasswordLabel.style.color = "red"; // Ubah warna teks menjadi merah
+                                    changePasswordField.classList.add("border-not-match"); // Tambah kelas CSS untuk border
+                                } else {
+                                    changePasswordLabel.classList.remove("password-not-match"); // Hapus kelas CSS jika cocok
+                                    changePasswordLabel.innerHTML = "Confirm password"; // Ubah teks label
+                                    changePasswordLabel.style.color = "green"; // Ubah warna teks menjadi hijau
+                                    changePasswordField.classList.remove("border-not-match"); // Hapus kelas CSS jika cocok
+                                }
+                            });
+
+                            passwordField.addEventListener("input", function () {
+                                const password = passwordField.value;
+                                const changePassword = changePasswordField.value;
+
+                                if (password !== changePassword) {
+                                    changePasswordLabel.classList.add("password-not-match"); // Tambah kelas CSS untuk label
+                                    changePasswordLabel.innerHTML = "Passwords do not match"; // Ubah teks label
                                     changePasswordLabel.style.color = "red"; // Ubah warna teks menjadi merah
                                     changePasswordField.classList.add("border-not-match"); // Tambah kelas CSS untuk border
                                 } else {
@@ -217,8 +234,8 @@
                                 }
                             });
                         </script>
-                        <button type="submit"
-                            class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">Submit</button>
+                        <button type="button" id="setting-button"
+                            class="focus:outline-none text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">submit</button>
                     </form>
                 </div>
             </div>
@@ -226,7 +243,11 @@
     </div>
 
 </body>
-
-<script src="/node_modules/flowbite/dist/flowbite.js"></script>
+<script src="/js/flowbite.js"></script>
+{{#if scripts}}
+{{#each scripts}}
+<script src="/js/{{this}}"></script>
+{{/each}}
+{{/if}}
 
 </html>

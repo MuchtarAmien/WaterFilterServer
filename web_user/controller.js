@@ -32,7 +32,14 @@ exports.login = async (req, res) => {
 
 exports.setting = async (req, res) => {
     try {
-        return res.render("setting");
+        const data = {
+            scripts: [
+                "util/alertify.min.js",
+                "util/httpRequest.js",
+                "user_setting.js",
+            ],
+        };
+        return res.render("setting", data);
     } catch (error) {
         return resError({ res, errors: error });
     }

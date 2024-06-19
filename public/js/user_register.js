@@ -14,8 +14,8 @@ registerButton.addEventListener("click", async (e) => {
         method: "POST",
         body: {
             username: usernameValue,
-            password: passwordValue,
             email: emailValue,
+            password: passwordValue,
         },
     });
     if (response.success) {
