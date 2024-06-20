@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
                 username,
                 email,
                 password: generateHash(password),
-                role: { connect: { name: "BASE" } },
+                role: { connect: { name: 'BASE' } },
                 passwordUpdatedAt: new Date(Date.now() - 1000),
                 profil: {
                     create: {
@@ -43,13 +43,8 @@ exports.register = async (req, res) => {
             },
         });
 
-        setCookie({
-            res,
-            title: "Authorization",
-            data: generateAuthorizationToken({
-                data: { userID: newUser.id, username: newUser.username },
-            }),
-        });
+        // Hapus token autentikasi (jika ada) setelah registrasi
+        res.clearCookie("auth_token")
 
         return resSuccess({
             res,
@@ -464,43 +459,38 @@ exports.list = async (req, res) => {
 
 exports.profileUpdate = async (req, res) => {
     try {
-        const { email, full_name, username } = req.body;
+        const { email, full_name, password, username } = req.body;
         const id = await getUser(req);
         const currentData = await prisma.user.findUnique({
             where: { id },
+            include: { profil: true } // Memasukkan profil agar dapat diakses
         });
 
-        // if user try change username
-        if (username != currentData.username) {
-            const checkUser = await prisma.user.findUnique({
-                where: { username },
-            });
-            // if username already exist throw error
-            if (checkUser) throw "User already exist or register";
-        }
-
-        // if user try change email
-        if (email != currentData.email) {
+        // Validate and check for email change
+        if (email && email !== currentData.email) {
             const checkUser = await prisma.user.findUnique({
                 where: { email },
             });
-            // if email already exist throw error
-            if (checkUser) throw "Email already exist or register";
+            if (checkUser) throw new ErrorException("Email already exists or registered");
         }
 
-        const emailChange = currentData.email !== email;
+        // Hash the new password if provided
+        let hashedPassword = null;
+        if (password) {
+            hashedPassword = await generateHash(password);
+        }
 
+        // Update user data
         const newData = await prisma.user.update({
-            where: {
-                id,
-            },
+            where: { id },
             data: {
-                username,
-                email,
-                emailIsVerified: currentData.email === email,
+                email: email || currentData.email,
+                emailIsVerified: email ? currentData.email === email : currentData.emailIsVerified,
+                ...(hashedPassword && { password: hashedPassword }),
+                username: username || currentData.username, // Update username jika ada perubahan
                 profil: {
                     update: {
-                        full_name,
+                        full_name: full_name || currentData.profil.full_name,
                     },
                 },
                 updatedAt: new Date(Date.now() - 1000),
@@ -518,35 +508,7 @@ exports.profileUpdate = async (req, res) => {
             },
         });
 
-        if (emailChange) {
-            const token = crypto.randomBytes(32).toString("hex");
-            const exp_time = 5;
-            const secret = await prisma.user.update({
-                where: { id },
-                data: {
-                    token: crypto
-                        .createHash("sha256")
-                        .update(token)
-                        .digest("hex"),
-                    tokenExpiredAt: new Date(
-                        new Date().getTime() + exp_time * 60000
-                    ),
-                    tokenType: "VERIFICATION_TOKEN",
-                },
-            });
-
-            const url = urlTokenGenerator(
-                req,
-                "api/v1/user/email-verification-process/",
-                token
-            );
-
-            const subject = "Email Verification";
-            const template = `<a href=${url}>${url}</a>`;
-            await sendEmail(secret.email, subject, template);
-        }
-
-        // Set New Cookie For User
+        // Set new cookie for the user
         setCookie({
             res,
             title: "Authorization",
@@ -557,13 +519,13 @@ exports.profileUpdate = async (req, res) => {
 
         return resSuccess({
             res,
-            title: emailChange
-                ? "Profile update, please verify your new email"
-                : "Success update your profile",
+            title: "Successfully updated your profile",
             data: newData,
         });
     } catch (err) {
         console.log(err);
-        return resError({ res, errors: err, title: "Failed update profile" });
+        return resError({ res, errors: err.message || err, title: "Failed to update profile" });
     }
 };
+
+
