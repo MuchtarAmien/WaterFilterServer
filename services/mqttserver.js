@@ -28,7 +28,7 @@ class MqttServer {
     this.connected = false;
     this.connectPromise = new Promise((resolve) => {
       this.client = mqtt.connect(
-        `mqtt://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`,
+        `mqtts://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`,
         {
           clean: true,
           connectTimeout: 4000,
