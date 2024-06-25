@@ -52,7 +52,7 @@
                         <label for="floating_password"
                             class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                         <!-- Ikon mata untuk toggle visibilitas password -->
-                        <img src="/Image/tidakterlihat.jpg" class="password-toggle" id="passwordToggle"
+                        <img src="/image/tidakterlihat.jpg" class="password-toggle" id="passwordToggle"
                             alt="Password Visibility Toggle">
                     </div>
                 </form>
@@ -68,10 +68,10 @@
                     passwordToggle.addEventListener("click", function () {
                         if (passwordInput.type === "password") {
                             passwordInput.type = "text";
-                            passwordToggle.src = "/Image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika password terlihat
+                            passwordToggle.src = "/image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika password terlihat
                         } else {
                             passwordInput.type = "password";
-                            passwordToggle.src = "/Image/tidakterlihat.jpg"; // Ganti ikon mata ke "on" ketika password tidak terlihat
+                            passwordToggle.src = "/image/tidakterlihat.jpg"; // Ganti ikon mata ke "on" ketika password tidak terlihat
                         }
                     }); 
                 </script>

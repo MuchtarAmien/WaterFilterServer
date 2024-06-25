@@ -8,8 +8,6 @@ settingsButton.addEventListener("click", async (e) => {
     const usernameValue = String(formUsername.value).trim();
     const emailValue = String(formEmail.value).trim();
     const passwordValue = String(formPassword.value).trim();
-    const fileInput = document.getElementById("file-input");
-    const profilePicture = document.getElementById("profile-picture");
     const response = await httpRequest({
         url: "/api/v1/user/update/profile",
         method: "POST",
@@ -17,7 +15,6 @@ settingsButton.addEventListener("click", async (e) => {
             username: usernameValue,
             email: emailValue,
             password: passwordValue,
-            profilePicture: profilePicture.src,
         },
     });
     alertify.set("notifier", "position", "top-right");

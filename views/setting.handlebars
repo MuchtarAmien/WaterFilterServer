@@ -104,145 +104,168 @@
 
 <body>
     <div class="max-w-screen-xl mx-5 xl:mx-auto">
-        <div class="grid grid-cols-2">
-            <div class="col-span-2 md:col-span-1">
-                <div class="font-bold block py-3 profile-icon-container" style="margin-top: 100px; margin-left:150px">
-                    <img id="profile-picture" class="profile-icon flex items-center justify-center"
-                        src="/image/profile.png" alt="Profile Picture">
-
-                    <div class="mt-5" style="margin-left:30px">
-                        <label for="file-input" id="edit-button">Edit</label>
-                        <input type="file" id="file-input" accept="image/*" onchange="previewProfilePicture(event)"
-                            style="display: none;">
+        <div class="flex items-center justify-center md:col-span-1 h-screen">
+            <div class="w-80" md:style="margin-left: -200px;">
+                <h2 class="font-bold block" style="font-size: 2rem;">
+                    <!-- Mengubah ukuran teks menjadi 2xl (contoh: dua kali lipat dari ukuran normal) dan menggeser ke kiri -->
+                    My Profile
+                </h2>
+                <form class="max-w-md mx-auto">
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="text" name="floating_username" id="floating_username"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+                            placeholder=" " required />
+                        <label for="floating_username"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
                     </div>
-                </div>
-                <script>
-                    function previewProfilePicture(event) {
-                        var input = event.target;
-                        var reader = new FileReader();
-                        reader.onload = function () {
-                            var profilePicture = document.getElementById('profile-picture');
-                            profilePicture.src = reader.result;
-                        };
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                </script>
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="email" name="floating_email" id="floating_email"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+                            placeholder=" " required />
+                        <label for="floating_email"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
+                            address</label>
+                    </div>
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="password" name="floating_password" id="floating_password"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+                            placeholder=" " required />
+                        <label for="floating_password"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                        <img src="/image/tidakterlihat.jpg" class="password-toggle" id="passwordToggle"
+                            alt="Password Visibility Toggle">
+                    </div>
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="password" name="repeat_password" id="floating_repeat_password"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+                            placeholder=" " required />
+                        <label for="floating_repeat_password"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
+                            password</label>
+                        <img src="/image/tidakterlihat.jpg" class="password-toggle" id="changePasswordToggle"
+                            alt="Confirm Password Visibility Toggle">
+                    </div>
+                    <script>
+                        // JavaScript untuk menangani klik pada ikon mata password
+                        const passwordInput = document.getElementById("floating_password");
+                        const passwordToggle = document.getElementById("passwordToggle");
+                        passwordToggle.addEventListener("click", function () {
+                            if (passwordInput.type === "password") {
+                                passwordInput.type = "text";
+                                passwordToggle.src = "/image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika password terlihat
+                            } else {
+                                passwordInput.type = "password";
+                                passwordToggle.src = "/image/tidakterlihat.jpg"; // Ganti ikon mata ke "on" ketika password tidak terlihat
+                            }
+                        });
+                        // JavaScript untuk menangani klik pada ikon mata konfirmasi password
+                        const changePasswordInput = document.getElementById("floating_repeat_password");
+                        const changePasswordToggle = document.getElementById("changePasswordToggle");
+                        changePasswordToggle.addEventListener("click", function () {
+                            if (changePasswordInput.type === "password") {
+                                changePasswordInput.type = "text";
+                                changePasswordToggle.src = "/image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika konfirmasi password terlihat
+                            } else {
+                                changePasswordInput.type = "password";
+                                changePasswordToggle.src = "/image/tidakterlihat.jpg"; // Ganti ikon mata ke "on" ketika konfirmasi password tidak terlihat
+                            }
+                        });
+                        // JavaScript untuk menangani validasi password dan konfirmasi password
+                        const passwordField = document.getElementById("floating_password");
+                        const changePasswordField = document.getElementById("floating_repeat_password");
+                        const changePasswordLabel = document.querySelector("label[for='floating_repeat_password']");
 
-            </div>
-            <div class="col-span-2 flex items-center justify-center md:col-span-1 h-screen">
-                <div class="w-80" md:style="margin-left: -200px;">
-                    <h2 class="font-bold block" style="font-size: 2rem;">
-                        <!-- Mengubah ukuran teks menjadi 2xl (contoh: dua kali lipat dari ukuran normal) dan menggeser ke kiri -->
-                        My Profile
-                    </h2>
-                    <form class="max-w-md mx-auto">
-                        <div class="relative z-0 w-full mb-5 group">
-                            <input type="text" name="floating_username" id="floating_username"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_username"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <input type="email" name="floating_email" id="floating_email"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_email"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
-                                address</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <input type="password" name="floating_password" id="floating_password"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_password"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
-                            <img src="/Image/tidakterlihat.jpg" class="password-toggle" id="passwordToggle"
-                                alt="Password Visibility Toggle">
-                        </div>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <input type="password" name="repeat_password" id="floating_repeat_password"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_repeat_password"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
-                                password</label>
-                            <img src="/Image/tidakterlihat.jpg" class="password-toggle" id="changePasswordToggle"
-                                alt="Confirm Password Visibility Toggle">
-                        </div>
-                        <script>
-                            // JavaScript untuk menangani klik pada ikon mata password
-                            const passwordInput = document.getElementById("floating_password");
-                            const passwordToggle = document.getElementById("passwordToggle");
-                            passwordToggle.addEventListener("click", function () {
-                                if (passwordInput.type === "password") {
-                                    passwordInput.type = "text";
-                                    passwordToggle.src = "/Image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika password terlihat
-                                } else {
-                                    passwordInput.type = "password";
-                                    passwordToggle.src = "/Image/tidakterlihat.jpg"; // Ganti ikon mata ke "on" ketika password tidak terlihat
-                                }
-                            });
-                            // JavaScript untuk menangani klik pada ikon mata konfirmasi password
-                            const changePasswordInput = document.getElementById("floating_repeat_password");
-                            const changePasswordToggle = document.getElementById("changePasswordToggle");
-                            changePasswordToggle.addEventListener("click", function () {
-                                if (changePasswordInput.type === "password") {
-                                    changePasswordInput.type = "text";
-                                    changePasswordToggle.src = "/Image/terlihat.jpg"; // Ganti ikon mata ke "off" ketika konfirmasi password terlihat
-                                } else {
-                                    changePasswordInput.type = "password";
-                                    changePasswordToggle.src = "/Image/tidakterlihat.jpg"; // Ganti ikon mata ke "on" ketika konfirmasi password tidak terlihat
-                                }
-                            });
-                            // JavaScript untuk menangani validasi password dan konfirmasi password
-                            const passwordField = document.getElementById("floating_password");
-                            const changePasswordField = document.getElementById("floating_repeat_password");
-                            const changePasswordLabel = document.querySelector("label[for='floating_repeat_password']");
+                        changePasswordField.addEventListener("input", function () {
+                            const password = passwordField.value;
+                            const changePassword = changePasswordField.value;
 
-                            changePasswordField.addEventListener("input", function () {
-                                const password = passwordField.value;
-                                const changePassword = changePasswordField.value;
+                            if (password !== changePassword) {
+                                changePasswordLabel.classList.add("password-not-match"); // Tambah kelas CSS untuk label
+                                changePasswordLabel.innerHTML = "Passwords do not match"; // Ubah teks label
+                                changePasswordLabel.style.color = "red"; // Ubah warna teks menjadi merah
+                                changePasswordField.classList.add("border-not-match"); // Tambah kelas CSS untuk border
+                            } else {
+                                changePasswordLabel.classList.remove("password-not-match"); // Hapus kelas CSS jika cocok
+                                changePasswordLabel.innerHTML = "Confirm password"; // Ubah teks label
+                                changePasswordLabel.style.color = "green"; // Ubah warna teks menjadi hijau
+                                changePasswordField.classList.remove("border-not-match"); // Hapus kelas CSS jika cocok
+                            }
+                        });
 
-                                if (password !== changePassword) {
-                                    changePasswordLabel.classList.add("password-not-match"); // Tambah kelas CSS untuk label
-                                    changePasswordLabel.innerHTML = "Passwords do not match"; // Ubah teks label
-                                    changePasswordLabel.style.color = "red"; // Ubah warna teks menjadi merah
-                                    changePasswordField.classList.add("border-not-match"); // Tambah kelas CSS untuk border
-                                } else {
-                                    changePasswordLabel.classList.remove("password-not-match"); // Hapus kelas CSS jika cocok
-                                    changePasswordLabel.innerHTML = "Confirm password"; // Ubah teks label
-                                    changePasswordLabel.style.color = "green"; // Ubah warna teks menjadi hijau
-                                    changePasswordField.classList.remove("border-not-match"); // Hapus kelas CSS jika cocok
-                                }
-                            });
+                        passwordField.addEventListener("input", function () {
+                            const password = passwordField.value;
+                            const changePassword = changePasswordField.value;
 
-                            passwordField.addEventListener("input", function () {
-                                const password = passwordField.value;
-                                const changePassword = changePasswordField.value;
-
-                                if (password !== changePassword) {
-                                    changePasswordLabel.classList.add("password-not-match"); // Tambah kelas CSS untuk label
-                                    changePasswordLabel.innerHTML = "Passwords do not match"; // Ubah teks label
-                                    changePasswordLabel.style.color = "red"; // Ubah warna teks menjadi merah
-                                    changePasswordField.classList.add("border-not-match"); // Tambah kelas CSS untuk border
-                                } else {
-                                    changePasswordLabel.classList.remove("password-not-match"); // Hapus kelas CSS jika cocok
-                                    changePasswordLabel.innerHTML = "Confirm password"; // Ubah teks label
-                                    changePasswordLabel.style.color = "green"; // Ubah warna teks menjadi hijau
-                                    changePasswordField.classList.remove("border-not-match"); // Hapus kelas CSS jika cocok
-                                }
-                            });
-                        </script>
-                        <button type="button" id="setting-button"
-                            class="focus:outline-none text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">submit</button>
-                    </form>
-                </div>
+                            if (password !== changePassword) {
+                                changePasswordLabel.classList.add("password-not-match"); // Tambah kelas CSS untuk label
+                                changePasswordLabel.innerHTML = "Passwords do not match"; // Ubah teks label
+                                changePasswordLabel.style.color = "red"; // Ubah warna teks menjadi merah
+                                changePasswordField.classList.add("border-not-match"); // Tambah kelas CSS untuk border
+                            } else {
+                                changePasswordLabel.classList.remove("password-not-match"); // Hapus kelas CSS jika cocok
+                                changePasswordLabel.innerHTML = "Confirm password"; // Ubah teks label
+                                changePasswordLabel.style.color = "green"; // Ubah warna teks menjadi hijau
+                                changePasswordField.classList.remove("border-not-match"); // Hapus kelas CSS jika cocok
+                            }
+                        });
+                    </script>
+                    <button type="button" id="setting-button"
+                        class="focus:outline-none text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">submit</button>
+                </form>
             </div>
         </div>
     </div>
 
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function getDataFromServer() {
+            const url = "/api/v1/user/";
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data received from server:', data); // Log data yang diterima dari server
+
+                    // Pastikan data sesuai dengan yang diharapkan
+                    if (data && data.success && data.data && data.data.username) {
+                        const usernameFromServer = data.data.username;
+                        const emailFromServer = data.data.email;
+
+                        // Ambil elemen input username dan email
+                        const usernameInput = document.getElementById("floating_username");
+                        const emailInput = document.getElementById("floating_email");
+
+                        // Pastikan elemen input ditemukan sebelum mengisinya
+                        if (usernameInput && emailInput) {
+                            console.log('Username input element:', usernameInput);
+                            console.log('Email input element:', emailInput);
+
+                            // Set nilai input username dan email dengan nilai dari server
+                            usernameInput.value = usernameFromServer;
+                            emailInput.value = emailFromServer;
+                        } else {
+                            console.error('Elements with ID "floating_username" or "floating_email" not found.');
+                        }
+                    } else {
+                        console.error('Data received from server is invalid or does not contain username:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+
+        getDataFromServer(); // Panggil fungsi untuk mengambil data saat halaman dimuat
+    });
+</script>
+
+
 <script src="/js/flowbite.js"></script>
 {{#if scripts}}
 {{#each scripts}}
