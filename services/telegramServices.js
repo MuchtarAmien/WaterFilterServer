@@ -25,6 +25,7 @@ const sendTelegramMessageByUsername = async (telegramId, message) => {
         console.log('Message sent successfully');
     } catch (error) {
         console.error('Error sending message:', error.message);
+        throw new Error('Failed to send Telegram message');
     } finally {
         await prisma.$disconnect();
     }
@@ -55,6 +56,7 @@ const sendTelegramMessageByKodeUnik = async (message, data) => {
         console.log('Message sent successfully');
     } catch (error) {
         console.error('Error sending message:', error.message);
+        throw new Error('Failed to send Telegram message');
     } finally {
         await prisma.$disconnect();
     }
