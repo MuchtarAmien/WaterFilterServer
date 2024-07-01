@@ -3,6 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 const botToken = '7048836463:AAEJ2AtPDcCRNIWmwuLXjSKK6HewFSw6PvI'; // Ganti dengan token bot Telegram Anda
+
 const sendTelegramMessageByUsername = async (telegramId, message) => {
     try {
         // Fetch user from the database based on username
@@ -30,6 +31,7 @@ const sendTelegramMessageByUsername = async (telegramId, message) => {
         await prisma.$disconnect();
     }
 };
+
 const sendTelegramMessageByKodeUnik = async (message, data) => {
     try {
         const device = await prisma.perangkat.findFirst({
@@ -61,8 +63,6 @@ const sendTelegramMessageByKodeUnik = async (message, data) => {
         await prisma.$disconnect();
     }
 };
-
-
 
 module.exports = {
     sendTelegramMessageByKodeUnik,
