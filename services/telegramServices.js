@@ -32,8 +32,6 @@ const sendTelegramMessageByUsername = async (telegramId, message) => {
         await prisma.$disconnect();
     }
 };
-
-
 const sendTelegramMessageByKodeUnik = async (message, data) => {
     try {
         const device = await prisma.perangkat.findFirst({
@@ -52,10 +50,12 @@ const sendTelegramMessageByKodeUnik = async (message, data) => {
         const { telegramId } = device.User.profil;
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-        await axios.post(url, {
+        const response = await axios.post(url, {
             chat_id: telegramId,
             text: message
         });
+
+        console.log('Telegram API response:', response.data); // Log response data
 
         console.log('Message sent successfully');
     } catch (error) {
