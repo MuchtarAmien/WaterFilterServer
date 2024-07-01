@@ -119,8 +119,7 @@ router.post(
         const { message } = req.body;
 
         try {
-            // Pastikan req telah diperbarui dengan data pengguna yang benar
-            await sendTelegramMessageByUsername(req, message);
+            await sendTelegramMessageByUsername(req, message); // Pass req as parameter
             res.status(200).send('Notification sent successfully');
         } catch (error) {
             console.error(error);
@@ -128,6 +127,5 @@ router.post(
         }
     }
 );
-
 
 module.exports = router;
