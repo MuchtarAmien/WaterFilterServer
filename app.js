@@ -34,17 +34,6 @@ app.use(cookieParser());
 app.use("/", ROUTER);
 app.use(express.static("public"));
 app.use("/static", express.static("public"));
-router.post('/send_notification_by_username', loginRequired, async (req, res) => {
-    const { telegramId, message } = req.body;
-
-    try {
-        await sendTelegramMessageByUsername(telegramId, message);
-        res.status(200).send('Notification sent successfully');
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
 
 http.listen(PORT, () => {
     console.log(`🚀 SERVER RUNNING IN PORT ${PORT}`);
