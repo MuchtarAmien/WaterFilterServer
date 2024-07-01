@@ -34,20 +34,36 @@ app.use(cookieParser());
 app.use("/", ROUTER);
 app.use(express.static("public"));
 app.use("/static", express.static("public"));
-app.post('/send_notification', async (req, res) => {
-    const { message, kode_unik } = req.body;
+router.post(
+    '/send_notification_by_kode_unik',
+    loginRequired, // Middleware untuk otorisasi
+    async (req, res) => {
+        const { message, kode_unik } = req.body; // Pastikan body request mengandung message dan kode_unik
 
-    try {
-        // Panggil fungsi sendTelegramMessageByKodeUnik dengan pesan dan kode unik
-        await sendTelegramMessageByKodeUnik(message, { kode_unik });
-
-        res.status(200).send('Notification sent successfully');
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
+        try {
+            await sendTelegramMessageByKodeUnik(message, { kode_unik });
+            res.status(200).send('Notification sent successfully');
+        } catch (error) {
+            console.error('Error sending notification:', error);
+            res.status(500).send('Internal Server Error');
+        }
     }
-});
+);
+router.post(
+    '/send_notification_by_username',
+    loginRequired, // Middleware untuk otorisasi
+    async (req, res) => {
+        const { message } = req.body;
 
+        try {
+            await sendTelegramMessageByUsername(req, message); // Pass req as parameter
+            res.status(200).send('Notification sent successfully');
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+);
 http.listen(PORT, () => {
     console.log(`🚀 SERVER RUNNING IN PORT ${PORT}`);
 });
