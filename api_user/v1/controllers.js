@@ -15,7 +15,7 @@ const {
 } = require("../../services/responseHandler");
 const { sendEmail, urlTokenGenerator } = require("../../services/mailing");
 const { random: stringGenerator } = require("@supercharge/strings");
-const { sendTelegramMessageByUsername } = require("../../telegramServices")
+const { sendTelegramMessageByUsername } = require("../../services/telegramServices")
 const crypto = require("crypto");
 const prisma = new PrismaClient();
 const ITEM_LIMIT = Number(process.env.ITEM_LIMIT) || 10;

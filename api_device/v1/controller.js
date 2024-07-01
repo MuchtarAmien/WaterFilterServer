@@ -1,6 +1,6 @@
 const { resError, resSuccess } = require("../../services/responseHandler");
 const { generateString } = require("../../services/stringGenerator");
-const { sendTelegramMessageByKodeUnik } = require("../../telegramServices"); // Impor layanan Telegram
+const { sendTelegramMessageByKodeUnik } = require("../../services/telegramServices"); // Impor layanan Telegram
 const prisma = require("../../prisma/client");
 
 exports.deviceList = async (req, res) => {
