@@ -9,7 +9,7 @@ const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const PORT = process.env.PORT || 8080;
 const { router: ROUTER, mqttTopic } = require("./router");
-const { sendTelegramMessageByKodeUnik, sendTelegramMessageByUsername } = require('./telegramServices'); // Sesuaikan path ini dengan lokasi file Anda
+const { sendTelegramMessageByKodeUnik, sendTelegramMessageByUsername } = require('./services/telegramServices'); // Sesuaikan path ini dengan lokasi file Anda
 
 MqttServer.createConnection();
 MqttServer.setSocket(io);
