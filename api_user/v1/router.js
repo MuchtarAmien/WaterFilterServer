@@ -97,4 +97,36 @@ router.post(
     controllers.profileUpdate
 );
 
+router.post(
+    '/send_notification_by_kode_unik',
+    loginRequired, // Middleware untuk otorisasi
+    async (req, res) => {
+        const { message, kode_unik } = req.body; // Pastikan body request mengandung message dan kode_unik
+
+        try {
+            await sendTelegramMessageByKodeUnik(message, { kode_unik });
+            res.status(200).send('Notification sent successfully');
+        } catch (error) {
+            console.error('Error sending notification:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+);
+router.post(
+    '/send_notification_by_username',
+    loginRequired, // Middleware untuk otorisasi
+    async (req, res) => {
+        const { telegramId, message } = req.body; // Ambil telegramId dan message dari req.body
+
+        try {
+            await sendTelegramMessageByUsername(telegramId, message); // Panggil dengan telegramId
+            res.status(200).send('Notification sent successfully');
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+);
+
+
 module.exports = router;
