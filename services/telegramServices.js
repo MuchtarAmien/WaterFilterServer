@@ -3,27 +3,17 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 const botToken = '7048836463:AAEJ2AtPDcCRNIWmwuLXjSKK6HewFSw6PvI'; // Ganti dengan token bot Telegram Anda
-const sendTelegramMessageByUsername = async (req, message) => {
+const sendTelegramMessageByUsername = async (telegramId, message) => {
     try {
-        const { username } = req;
-
-        // Ambil user dari database berdasarkan username
+        // Fetch user from the database based on username
         const user = await prisma.user.findFirst({
-            where: { username },
-            select: { telegramId: true, username: true }
+            where: { telegramId },
+            select: { telegramId: true }
         });
 
-        console.log('User found:', user);
-
-        if (!user) {
-            throw new Error('User not found');
+        if (!user || !user.telegramId) {
+            throw new Error('User not found or telegramId is empty');
         }
-
-        if (!user.telegramId) {
-            throw new Error('User found but telegramId is empty');
-        }
-
-        console.log('Username:', user.username); // Tampilkan username di konsol
 
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 

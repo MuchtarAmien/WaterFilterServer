@@ -117,10 +117,10 @@ router.post(
     loginRequired, // Middleware untuk otorisasi
     async (req, res) => {
         const { message } = req.body;
-        const { username } = req.user; // Pastikan Anda mengambil username dari data pengguna yang sudah diverifikasi
 
         try {
-            await sendTelegramMessageByUsername(username, message); // Pastikan username disampaikan ke fungsi
+            // Pastikan req telah diperbarui dengan data pengguna yang benar
+            await sendTelegramMessageByUsername(req, message);
             res.status(200).send('Notification sent successfully');
         } catch (error) {
             console.error(error);
