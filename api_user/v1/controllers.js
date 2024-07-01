@@ -155,7 +155,7 @@ exports.detail = async (req, res) => {
                 username: true,
                 email: true,
                 telegramId: true, // Menambahkan telegramId
-                profil: { select: { full_name: true, photo: true } },
+                profil: { select: { full_name: true, telegramId: true } },
                 role: { select: { name: true } },
             },
         });

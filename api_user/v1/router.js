@@ -117,9 +117,10 @@ router.post(
     loginRequired, // Middleware untuk otorisasi
     async (req, res) => {
         const { message } = req.body;
+        const { username } = req.user; // Pastikan Anda mengambil username dari data pengguna yang sudah diverifikasi
 
         try {
-            await sendTelegramMessageByUsername(req, message); // Pass req as parameter
+            await sendTelegramMessageByUsername(username, message); // Pastikan username disampaikan ke fungsi
             res.status(200).send('Notification sent successfully');
         } catch (error) {
             console.error(error);
@@ -127,5 +128,6 @@ router.post(
         }
     }
 );
+
 
 module.exports = router;
