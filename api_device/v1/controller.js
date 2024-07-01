@@ -449,7 +449,7 @@ exports.generateRecordMqtt = async (payload, res) => {
         // Kirim pesan Telegram jika ada notifikasi yang harus dikirim
         if (notifications.length > 0) {
             const message = `Data terbaru dari perangkat dengan kode unik ${kode_unik}:\n${notifications.join("\n")}`;
-            await sendTelegramMessageByKodeUnik(message, { kode_unik });
+            await sendTelegramMessageByKodeUnik(message, { kode_unik }); // Handle potential error here
         }
 
         // Buat rekaman baru jika memenuhi syarat
@@ -468,10 +468,10 @@ exports.generateRecordMqtt = async (payload, res) => {
             console.log(
                 "New record not created because the time difference is less than 1 minute"
             );
-            throw "New record not created because the time difference is less than 1 minute";
+            throw new Error("New record not created because the time difference is less than 1 minute");
         }
     } catch (error) {
         console.error("Error creating record:", error);
-        return;
+        // Handle or log the error appropriately
     }
 };
