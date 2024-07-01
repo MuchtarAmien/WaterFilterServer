@@ -34,6 +34,19 @@ app.use(cookieParser());
 app.use("/", ROUTER);
 app.use(express.static("public"));
 app.use("/static", express.static("public"));
+app.post('/send_notification', async (req, res) => {
+    const { message, kode_unik } = req.body;
+
+    try {
+        // Panggil fungsi sendTelegramMessageByKodeUnik dengan pesan dan kode unik
+        await sendTelegramMessageByKodeUnik(message, { kode_unik });
+
+        res.status(200).send('Notification sent successfully');
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 http.listen(PORT, () => {
     console.log(`🚀 SERVER RUNNING IN PORT ${PORT}`);
