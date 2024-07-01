@@ -374,7 +374,6 @@ exports.toggleDevice = async (req, res) => {
 };
 exports.generateRecordMqtt = async (payload, res) => {
     try {
-        // Mendapatkan data dari body permintaan
         const body = JSON.parse(payload);
         const {
             kode_unik,
@@ -420,18 +419,15 @@ exports.generateRecordMqtt = async (payload, res) => {
 
         console.log("Device updated:", updateDevice);
 
-        // Periksa entri terbaru di tabel "Riwayat"
         const recentRecord = await prisma.riwayat.findFirst({
             where: { id_perangkatr: deviceExists.id_perangkat },
             orderBy: { createdAt: "desc" },
         });
 
-        // Dapatkan waktu sekarang
         const now = new Date();
         body.createdAt = now;
         res.socket.emit(`/monitoring/${kode_unik}`, body);
 
-        // Kirim notifikasi ke Telegram berdasarkan kondisi monitor
         const notifications = [];
 
         if (parseFloat(monitor_tds) > 1000) {
@@ -446,13 +442,12 @@ exports.generateRecordMqtt = async (payload, res) => {
             notifications.push(`pH MELEWATI BATAS KADAR (${monitor_ph})`);
         }
 
-        // Kirim pesan Telegram jika ada notifikasi yang harus dikirim
         if (notifications.length > 0) {
             const message = `Data terbaru dari perangkat dengan kode unik ${kode_unik}:\n${notifications.join("\n")}`;
-            await sendTelegramMessageByKodeUnik(message, { kode_unik }); // Handle potential error here
+            console.log("Sending Telegram message with content:", message);
+            await sendTelegramMessageByKodeUnik(message, { kode_unik });
         }
 
-        // Buat rekaman baru jika memenuhi syarat
         if (!recentRecord || now - new Date(recentRecord.createdAt) > 60000) {
             const newRecord = await prisma.riwayat.create({
                 data: {
@@ -472,6 +467,6 @@ exports.generateRecordMqtt = async (payload, res) => {
         }
     } catch (error) {
         console.error("Error creating record:", error);
-        // Handle or log the error appropriately
     }
 };
+

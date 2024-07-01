@@ -2,9 +2,7 @@ const axios = require('axios');
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
-const botToken1 = '7048836463:AAEJ2AtPDcCRNIWmwuLXjSKK6HewFSw6PvI'; // Ganti dengan token bot Telegram Anda
-
-const botToken2 = '7048836463:AAEJ2AtPDcCRNIWmwuLXjSKK6HewFSw6PvI'; // Ganti dengan token bot Telegram Anda
+const botToken = '7048836463:AAEJ2AtPDcCRNIWmwuLXjSKK6HewFSw6PvI'; // Ganti dengan token bot Telegram Anda
 const sendTelegramMessageByUsername = async (telegramId, message) => {
     try {
         // Fetch user from the database based on telegramId
@@ -13,22 +11,22 @@ const sendTelegramMessageByUsername = async (telegramId, message) => {
             select: { telegramId: true }
         });
 
-        // Check if user with telegramId exists
         if (!user || !user.telegramId) {
             throw new Error('User not found or telegramId is empty');
         }
 
-        const url = `https://api.telegram.org/bot${botToken2}/sendMessage`;
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-        // Send message to Telegram
-        await axios.post(url, {
+        const response = await axios.post(url, {
             chat_id: user.telegramId,
             text: message
         });
 
+        console.log('Telegram API response:', response.data); // Log response data
+
         console.log('Message sent successfully');
     } catch (error) {
-        console.error('Error sending message:', error.message);
+        console.error('Error sending message:', error.response ? error.response.data : error.message);
         throw new Error('Failed to send Telegram message');
     } finally {
         await prisma.$disconnect();
@@ -50,7 +48,7 @@ const sendTelegramMessageByKodeUnik = async (message, data) => {
         }
 
         const { telegramId } = device.User.profil;
-        const url = `https://api.telegram.org/bot${botToken1}/sendMessage`;
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
         const response = await axios.post(url, {
             chat_id: telegramId,
@@ -61,7 +59,7 @@ const sendTelegramMessageByKodeUnik = async (message, data) => {
 
         console.log('Message sent successfully');
     } catch (error) {
-        console.error('Error sending message:', error.message);
+        console.error('Error sending message:', error.response ? error.response.data : error.message);
         throw new Error('Failed to send Telegram message');
     } finally {
         await prisma.$disconnect();
