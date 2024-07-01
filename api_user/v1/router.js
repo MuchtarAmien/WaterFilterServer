@@ -13,7 +13,7 @@ const {
     tokenTypeIs,
 } = require("../../middlewares/userMiddlewares");
 const controllers = require("./controllers");
-const sendTelegramMessage = require("../../services/telegramServices"); // Impor layanan Telegram
+const { sendTelegramMessageByUsername } = require("../../services/telegramServices"); // Impor layanan Telegram
 
 router.post(
     "/register",
