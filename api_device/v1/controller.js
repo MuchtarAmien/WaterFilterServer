@@ -1,5 +1,6 @@
 const { resError, resSuccess } = require("../../services/responseHandler");
 const { generateString } = require("../../services/stringGenerator");
+const { sendTelegramMessageByKodeUnik } = require("../../services/telegramServices"); // Impor layanan Telegram
 const prisma = require("../../prisma/client");
 
 exports.deviceList = async (req, res) => {
@@ -369,5 +370,108 @@ exports.toggleDevice = async (req, res) => {
         });
     } catch (error) {
         return resError({ res, errors: error });
+    }
+};
+exports.generateRecordMqtt = async (payload, res) => {
+    try {
+        // Mendapatkan data dari body permintaan
+        const body = JSON.parse(payload);
+        const {
+            kode_unik,
+            control_motor_dc,
+            monior_kekeruhan,
+            monitor_ph,
+            monitor_tds,
+        } = body;
+
+        console.log("Received kode_unik:", kode_unik);
+        console.log("Request body:", body);
+
+        if (
+            !kode_unik ||
+            monior_kekeruhan === undefined ||
+            monitor_ph === undefined ||
+            monitor_tds === undefined
+        ) {
+            console.log("Invalid data provided");
+            return;
+        }
+
+        const deviceExists = await prisma.perangkat.findUnique({
+            where: { kode_unik: kode_unik },
+        });
+
+        console.log("Device exists:", deviceExists);
+
+        if (!deviceExists) {
+            console.log("Device not found for kode_unik:", kode_unik);
+            return;
+        }
+
+        const updateDevice = await prisma.perangkat.update({
+            where: { kode_unik: kode_unik },
+            data: {
+                control_motor_dc: control_motor_dc,
+                monior_kekeruhan: monior_kekeruhan,
+                monitor_ph: monitor_ph,
+                monitor_tds: monitor_tds,
+            },
+        });
+
+        console.log("Device updated:", updateDevice);
+
+        // Periksa entri terbaru di tabel "Riwayat"
+        const recentRecord = await prisma.riwayat.findFirst({
+            where: { id_perangkatr: deviceExists.id_perangkat },
+            orderBy: { createdAt: "desc" },
+        });
+
+        // Dapatkan waktu sekarang
+        const now = new Date();
+        body.createdAt = now;
+        res.socket.emit(`/monitoring/${kode_unik}`, body);
+
+        // Kirim notifikasi ke Telegram berdasarkan kondisi monitor
+        const notifications = [];
+
+        if (parseFloat(monitor_tds) > 1000) {
+            notifications.push(`TDS MELEWATI BATAS KADAR (${monitor_tds})`);
+        }
+
+        if (parseFloat(monior_kekeruhan) > 25) {
+            notifications.push(`Kekeruhan MELEWATI BATAS KADAR (${monior_kekeruhan})`);
+        }
+
+        if (parseFloat(monitor_ph) < 5 || parseFloat(monitor_ph) > 6) {
+            notifications.push(`pH MELEWATI BATAS KADAR (${monitor_ph})`);
+        }
+
+        // Kirim pesan Telegram jika ada notifikasi yang harus dikirim
+        if (notifications.length > 0) {
+            const message = `Data terbaru dari perangkat dengan kode unik ${kode_unik}:\n${notifications.join("\n")}`;
+            await sendTelegramMessageByKodeUnik(message, { kode_unik });
+        }
+
+        // Buat rekaman baru jika memenuhi syarat
+        if (!recentRecord || now - new Date(recentRecord.createdAt) > 60000) {
+            const newRecord = await prisma.riwayat.create({
+                data: {
+                    monitor_tds: monitor_tds,
+                    monitor_ph: monitor_ph,
+                    monior_kekeruhan: monior_kekeruhan,
+                    id_perangkatr: deviceExists.id_perangkat,
+                },
+            });
+
+            console.log("New record created:", newRecord);
+        } else {
+            console.log(
+                "New record not created because the time difference is less than 1 minute"
+            );
+            throw "New record not created because the time difference is less than 1 minute";
+        }
+    } catch (error) {
+        console.error("Error creating record:", error);
+        return;
     }
 };

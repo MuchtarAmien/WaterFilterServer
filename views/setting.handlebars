@@ -127,6 +127,14 @@
                             address</label>
                     </div>
                     <div class="relative z-0 w-full mb-5 group">
+                        <input type="telegramId" name="floating_telegram" id="floating_telegram"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+                            placeholder=" " required />
+                        <label for="floating_email"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telegram
+                            ID</label>
+                    </div>
+                    <div class="relative z-0 w-full mb-5 group">
                         <input type="password" name="floating_password" id="floating_password"
                             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
                             placeholder=" " required />
@@ -233,27 +241,31 @@
                     console.log('Data received from server:', data); // Log data yang diterima dari server
 
                     // Pastikan data sesuai dengan yang diharapkan
-                    if (data && data.success && data.data && data.data.username) {
+                    if (data && data.success && data.data && data.data.username && data.data.telegramId) {
                         const usernameFromServer = data.data.username;
                         const emailFromServer = data.data.email;
+                        const telegramIdFromServer = data.data.telegramId;
 
-                        // Ambil elemen input username dan email
+                        // Ambil elemen input username, email, dan telegram_id
                         const usernameInput = document.getElementById("floating_username");
                         const emailInput = document.getElementById("floating_email");
+                        const telegramIdInput = document.getElementById("floating_telegram");
 
                         // Pastikan elemen input ditemukan sebelum mengisinya
-                        if (usernameInput && emailInput) {
+                        if (usernameInput && emailInput && telegramIdInput) {
                             console.log('Username input element:', usernameInput);
                             console.log('Email input element:', emailInput);
+                            console.log('Telegram ID input element:', telegramIdInput);
 
-                            // Set nilai input username dan email dengan nilai dari server
+                            // Set nilai input username, email, dan telegram_id dengan nilai dari server
                             usernameInput.value = usernameFromServer;
                             emailInput.value = emailFromServer;
+                            telegramIdInput.value = telegramIdFromServer;
                         } else {
-                            console.error('Elements with ID "floating_username" or "floating_email" not found.');
+                            console.error('Elements with ID "floating_username", "floating_email", or "floating_telegram_id" not found.');
                         }
                     } else {
-                        console.error('Data received from server is invalid or does not contain username:', data);
+                        console.error('Data received from server is invalid or does not contain username, email, or telegram_id:', data);
                     }
                 })
                 .catch(error => {
@@ -264,6 +276,7 @@
         getDataFromServer(); // Panggil fungsi untuk mengambil data saat halaman dimuat
     });
 </script>
+
 
 
 <script src="/js/flowbite.js"></script>

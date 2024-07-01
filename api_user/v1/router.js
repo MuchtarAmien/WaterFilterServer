@@ -13,6 +13,7 @@ const {
     tokenTypeIs,
 } = require("../../middlewares/userMiddlewares");
 const controllers = require("./controllers");
+const sendTelegramMessage = require("../../services/telegramServices"); // Impor layanan Telegram
 
 router.post(
     "/register",
@@ -26,6 +27,7 @@ router.post(
         .withMessage(
             "Password must have at least 8 characters, have a combination of numbers, uppercase, lowercase letters and unique characters"
         ),
+    body("telegramId").optional().isString().withMessage("Telegram ID must be a string"),
     formChacker,
     usernameIsNotExist,
     emailIsNotExist,
@@ -90,8 +92,40 @@ router.post(
     body("username").notEmpty().withMessage("Full name is required"),
     body("email").notEmpty().isEmail().withMessage("Valid email is required"),
     body("password").optional().isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
+    body("telegramId").optional().isString().withMessage("Telegram ID must be a string"),
     formChacker,
     controllers.profileUpdate
+);
+
+router.post(
+    '/send_notification_by_kode_unik',
+    loginRequired, // Middleware untuk otorisasi
+    async (req, res) => {
+        const { message, kode_unik } = req.body; // Pastikan body request mengandung message dan kode_unik
+
+        try {
+            await sendTelegramMessageByKodeUnik(message, { kode_unik });
+            res.status(200).send('Notification sent successfully');
+        } catch (error) {
+            console.error('Error sending notification:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+);
+router.post(
+    '/send_notification_by_username',
+    loginRequired, // Middleware untuk otorisasi
+    async (req, res) => {
+        const { message } = req.body;
+
+        try {
+            await sendTelegramMessageByUsername(req, message); // Pass req as parameter
+            res.status(200).send('Notification sent successfully');
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
 );
 
 module.exports = router;

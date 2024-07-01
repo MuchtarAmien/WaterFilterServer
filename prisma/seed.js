@@ -1,5 +1,5 @@
 const prisma = require("./client");
-async function main() {}
+async function main() { }
 
 main()
     .catch((e) => {

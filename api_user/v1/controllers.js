@@ -15,23 +15,35 @@ const {
 } = require("../../services/responseHandler");
 const { sendEmail, urlTokenGenerator } = require("../../services/mailing");
 const { random: stringGenerator } = require("@supercharge/strings");
+const { sendTelegramMessageByUsername } = require("../../services/telegramServices")
 const crypto = require("crypto");
 const prisma = new PrismaClient();
 const ITEM_LIMIT = Number(process.env.ITEM_LIMIT) || 10;
 
 exports.register = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, telegramId } = req.body;
     try {
+        // Cek jika user sudah ada
+        const existingUser = await prisma.user.findUnique({
+            where: { email },
+        });
+        if (existingUser) {
+            throw new Error('User with this email already exists');
+        }
+
+        // Buat user baru dan profil
         const newUser = await prisma.user.create({
             data: {
                 username,
                 email,
                 password: generateHash(password),
+                telegramId,
                 role: { connect: { name: 'BASE' } },
                 passwordUpdatedAt: new Date(Date.now() - 1000),
                 profil: {
                     create: {
                         full_name: username,
+                        telegramId, // Simpan telegramId di profil
                     },
                 },
             },
@@ -40,11 +52,14 @@ exports.register = async (req, res) => {
                 username: true,
                 email: true,
                 roleId: true,
+                profil: true, // Memilih untuk mendapatkan data profil baru yang termasuk telegramId
             },
         });
 
+        // Kirim pesan notifikasi ke Telegram
+        await sendTelegramMessageByUsername(telegramId, 'Welcome! Your registration was successful.');
         // Hapus token autentikasi (jika ada) setelah registrasi
-        res.clearCookie("auth_token")
+        res.clearCookie("auth_token");
 
         return resSuccess({
             res,
@@ -52,10 +67,12 @@ exports.register = async (req, res) => {
             data: newUser,
         });
     } catch (err) {
-        console.log(err);
-        return resError({ res, title: "Failed register user", errors: err });
+        console.error('Error during registration:', err);
+        return resError({ res, title: "Failed register user", errors: err.message });
     }
 };
+
+
 
 exports.login = async (req, res) => {
     const { username, password } = req.body;
@@ -137,6 +154,7 @@ exports.detail = async (req, res) => {
             select: {
                 username: true,
                 email: true,
+                telegramId: true, // Menambahkan telegramId
                 profil: { select: { full_name: true, photo: true } },
                 role: { select: { name: true } },
             },
@@ -154,6 +172,7 @@ exports.detail = async (req, res) => {
         });
     }
 };
+
 
 exports.updatePassword = async (req, res) => {
     try {
@@ -369,6 +388,7 @@ exports.list = async (req, res) => {
                         id: true,
                         email: true,
                         username: true,
+                        telegramId: true, // Tambahkan telegramId di sini
                         passwordUpdatedAt: true,
                         profil: { select: { full_name: true, photo: true } },
                         role: { select: { name: true } },
@@ -396,6 +416,7 @@ exports.list = async (req, res) => {
                         id: true,
                         email: true,
                         username: true,
+                        telegramId: true, // Tambahkan telegramId di sini
                         passwordUpdatedAt: true,
                         profil: { select: { full_name: true, photo: true } },
                         role: { select: { name: true } },
@@ -415,6 +436,7 @@ exports.list = async (req, res) => {
                         id: true,
                         email: true,
                         username: true,
+                        telegramId: true, // Tambahkan telegramId di sini
                         passwordUpdatedAt: true,
                         profil: { select: { full_name: true, photo: true } },
                         role: { select: { name: true } },
@@ -435,6 +457,7 @@ exports.list = async (req, res) => {
                         id: true,
                         email: true,
                         username: true,
+                        telegramId: true, // Tambahkan telegramId di sini
                         passwordUpdatedAt: true,
                         profil: { select: { full_name: true, photo: true } },
                         role: { select: { name: true } },
@@ -457,9 +480,10 @@ exports.list = async (req, res) => {
     }
 };
 
+
 exports.profileUpdate = async (req, res) => {
     try {
-        const { email, full_name, password, username } = req.body;
+        const { email, full_name, password, username, telegramId } = req.body; // Tambahkan telegramId ke destructuring assignment
         const id = await getUser(req);
         const currentData = await prisma.user.findUnique({
             where: { id },
@@ -488,6 +512,7 @@ exports.profileUpdate = async (req, res) => {
                 emailIsVerified: email ? currentData.email === email : currentData.emailIsVerified,
                 ...(hashedPassword && { password: hashedPassword }),
                 username: username || currentData.username, // Update username jika ada perubahan
+                telegramId: telegramId || currentData.telegramId, // Update telegramId jika ada perubahan
                 profil: {
                     update: {
                         full_name: full_name || currentData.profil.full_name,
@@ -499,6 +524,7 @@ exports.profileUpdate = async (req, res) => {
                 id: true,
                 username: true,
                 email: true,
+                telegramId: true, // Tambahkan telegramId pada hasil seleksi
                 emailIsVerified: true,
                 profil: {
                     select: {
@@ -527,5 +553,6 @@ exports.profileUpdate = async (req, res) => {
         return resError({ res, errors: err.message || err, title: "Failed to update profile" });
     }
 };
+
 
 

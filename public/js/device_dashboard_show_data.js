@@ -208,7 +208,7 @@ document.addEventListener("userChangeDevice", (e) => {
         socket.offAnyOutgoing(renderSocketData);
         socket.offAnyOutgoing();
     }
-    socket.on("connect", () => {});
+    socket.on("connect", () => { });
     socket.on(`/monitoring/${kode_unik}`, renderSocketData);
     lastDeviceId = kode_unik;
 });

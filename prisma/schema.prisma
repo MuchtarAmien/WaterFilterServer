@@ -22,6 +22,7 @@ model User {
   id                String      @id @default(uuid())
   username          String      @unique
   email             String      @unique
+  telegramId        String?
   password          String
   passwordUpdatedAt DateTime
   accountIsVerified Boolean     @default(false)
@@ -38,13 +39,13 @@ model User {
 }
 
 model Profil {
-  id        String   @id @default(cuid())
-  full_name String?
-  photo     String?
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(cuid())
+  full_name  String?
+  telegramId String? // Tambahkan kolom telegramId dengan opsional (?)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Perangkat {

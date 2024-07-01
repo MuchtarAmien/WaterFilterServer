@@ -12,13 +12,14 @@ const crypto = require("crypto");
 const loginRequired = async (req, res, next) => {
     const jwtToken = await getAuthorizationToken(req);
     try {
-        // check if token exits
-        if (!jwtToken)
+        // check if token exists
+        if (!jwtToken) {
             return resError({
                 res,
-                title: "Login Requires! Please Login",
+                title: "Login Required! Please Login",
                 code: 401,
             });
+        }
 
         // find user
         const user = await prisma.user.findUnique({
@@ -29,6 +30,7 @@ const loginRequired = async (req, res, next) => {
                 id: true,
                 username: true,
                 updatedAt: true,
+                telegramId: true,
                 role: {
                     select: {
                         name: true,
@@ -36,36 +38,32 @@ const loginRequired = async (req, res, next) => {
                 },
             },
         });
-        if (
-            new Date(Number(jwtToken.iat * 1000)) <
-            new Date(user.passwordUpdatedAt)
-        )
-            throw new ErrorException({
-                type: "user",
-                detail: "User password has changed, please relogin",
-                location: "User authorization",
-            });
 
-        if (!user)
+        if (!user) {
             throw new ErrorException({
                 type: "user",
-                detail: "Cant find the user",
+                detail: "Can't find the user",
                 location: "User authorization",
             });
+        }
 
         req.username = user.username;
         req.role = user.role.name;
         req.userId = user.id;
-        if (user) return next();
+        req.telegramId = user.telegramId; // Store telegramId in request object
+
+        return next();
     } catch (error) {
         return resError({
             res,
-            title: "Cant find the user",
+            title: "Can't find the user",
             errors: error,
             code: 401,
         });
     }
 };
+
+
 
 const logoutRequired = async (req, res, next) => {
     const jwtToken = await getAuthorizationToken(req);
