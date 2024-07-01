@@ -2,7 +2,9 @@ const axios = require('axios');
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
-const botToken = '7048836463:AAEJ2AtPDcCRNIWmwuLXjSKK6HewFSw6PvI'; // Ganti dengan token bot Telegram Anda
+const botToken1 = '7048836463:AAEJ2AtPDcCRNIWmwuLXjSKK6HewFSw6PvI'; // Ganti dengan token bot Telegram Anda
+
+const botToken2 = '7048836463:AAEJ2AtPDcCRNIWmwuLXjSKK6HewFSw6PvI'; // Ganti dengan token bot Telegram Anda
 const sendTelegramMessageByUsername = async (telegramId, message) => {
     try {
         // Fetch user from the database based on telegramId
@@ -16,7 +18,7 @@ const sendTelegramMessageByUsername = async (telegramId, message) => {
             throw new Error('User not found or telegramId is empty');
         }
 
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        const url = `https://api.telegram.org/bot${botToken2}/sendMessage`;
 
         // Send message to Telegram
         await axios.post(url, {
@@ -48,7 +50,7 @@ const sendTelegramMessageByKodeUnik = async (message, data) => {
         }
 
         const { telegramId } = device.User.profil;
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        const url = `https://api.telegram.org/bot${botToken1}/sendMessage`;
 
         const response = await axios.post(url, {
             chat_id: telegramId,
