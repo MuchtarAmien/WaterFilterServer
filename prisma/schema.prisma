@@ -41,7 +41,7 @@ model User {
 model Profil {
   id         String   @id @default(cuid())
   full_name  String?
-  telegramId String? // Tambahkan kolom telegramId dengan opsional (?)
+  telegramId String?
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String   @unique
   createdAt  DateTime @default(now())

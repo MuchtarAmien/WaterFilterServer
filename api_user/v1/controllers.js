@@ -483,7 +483,7 @@ exports.list = async (req, res) => {
 
 exports.profileUpdate = async (req, res) => {
     try {
-        const { email, full_name, password, username, telegramId } = req.body; // Tambahkan telegramId ke destructuring assignment
+        const { email, password, username, telegramId } = req.body; // Tambahkan telegramId ke destructuring assignment
         const id = await getUser(req);
         const currentData = await prisma.user.findUnique({
             where: { id },
@@ -495,7 +495,7 @@ exports.profileUpdate = async (req, res) => {
             const checkUser = await prisma.user.findUnique({
                 where: { email },
             });
-            if (checkUser) throw new ErrorException("Email already exists or registered");
+            if (checkUser) throw new Error("Email already exists or registered");
         }
 
         // Hash the new password if provided
@@ -515,7 +515,8 @@ exports.profileUpdate = async (req, res) => {
                 telegramId: telegramId || currentData.telegramId, // Update telegramId jika ada perubahan
                 profil: {
                     update: {
-                        full_name: full_name || currentData.profil.full_name,
+                        full_name: username || currentData.profil.full_name,
+                        telegramId: telegramId || currentData.profil.telegramId // Update telegramId juga di profil
                     },
                 },
                 updatedAt: new Date(Date.now() - 1000),
@@ -529,6 +530,7 @@ exports.profileUpdate = async (req, res) => {
                 profil: {
                     select: {
                         full_name: true,
+                        telegramId: true,
                     },
                 },
             },
@@ -553,6 +555,3 @@ exports.profileUpdate = async (req, res) => {
         return resError({ res, errors: err.message || err, title: "Failed to update profile" });
     }
 };
-
-
-
