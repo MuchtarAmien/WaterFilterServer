@@ -22,6 +22,8 @@ io.on("connection", (socket) => {
 
 // Konfigurasi Express Handlebars sebagai view engine
 app.engine("handlebars", expbs.engine({ extname: ".handlebars", defaultLayout: "" }));
+app.io = io;
+app.mqttpublish = MqttServer.response;
 app.set("views", "views");
 app.set("view engine", "handlebars");
 
