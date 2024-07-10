@@ -175,6 +175,9 @@ function renderSocketData(data) {
         labels: datetime,
         seriesData: monior_kekeruhan,
     });
+
+    // Update the header info with the new data
+    setHeaderInfo(data);
 }
 
 function setHeaderInfo(data) {
