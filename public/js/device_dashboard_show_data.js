@@ -5,6 +5,9 @@ const lastWeek = new Date(
 const lastMonth = new Date(
     new Date().setDate(new Date().getDate() - 30)
 ).toISOString();
+const last3Month = new Date(
+    new Date().setDate(new Date().getDate() - 90)
+).toISOString();
 const monitor_ph = [];
 const monitor_tds = [];
 const monior_kekeruhan = [];
@@ -215,3 +218,131 @@ document.addEventListener("userChangeDevice", (e) => {
     socket.on(`/monitoring/${kode_unik}`, renderSocketData);
     lastDeviceId = kode_unik;
 });
+
+// TDS Drop Down Button
+function changeTDS(day) {
+    const kode_unik = activeFilter?.kode_unik;
+    let chooseDate ;
+    if (day == "7") chooseDate = lastWeek;
+    if (day == "30") chooseDate = lastMonth;
+    if (day == "90") chooseDate = last3Month;
+
+    const buttonElemet =  document.getElementById("tdsDropDownButton");
+    buttonElemet.textContent = "";
+    buttonElemet.insertAdjacentHTML("beforeend", `
+    Last ${day} days
+    <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 10 6">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" d="m1 1 4 4 4-4" />
+    </svg>
+    `);
+    const finalUrl = `/api/v1/device/history?kode_unik=${kode_unik}&tanggal_akhir=${currentDate}&tanggal_awal=${chooseDate}`;
+
+    generalDataLoader({
+        url: finalUrl,
+        func: (data) => {
+            monitor_tds.length = 0;
+            for (let i = 0; i < data.length; i++) {
+                const d = data[i];
+                monitor_tds.push(d?.monitor_tds);
+                datetime.push(days(d?.createdAt));
+            }
+        
+            chartTds = renderGraph({
+                id: "chart-tds",
+                seriesName: "PPM",
+                seriesData: monitor_tds,
+                labels: datetime,
+            });
+        },
+    });
+    document.getElementById("turbidityDropDownButton")
+}
+
+// PH Drop Down Button
+function changePH(day) {
+    const kode_unik = activeFilter?.kode_unik;
+    let chooseDate ;
+    if (day == "7") chooseDate = lastWeek;
+    if (day == "30") chooseDate = lastMonth;
+    if (day == "90") chooseDate = last3Month;
+
+    const buttonElemet =  document.getElementById("phDropdownButton");
+    buttonElemet.textContent = "";
+    buttonElemet.insertAdjacentHTML("beforeend", `
+    Last ${day} days
+    <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 10 6">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" d="m1 1 4 4 4-4" />
+    </svg>
+    `);
+    const finalUrl = `/api/v1/device/history?kode_unik=${kode_unik}&tanggal_akhir=${currentDate}&tanggal_awal=${chooseDate}`;
+
+    generalDataLoader({
+        url: finalUrl,
+        func: (data) => {
+            monitor_ph.length = 0;
+            for (let i = 0; i < data.length; i++) {
+                const d = data[i];
+                monitor_ph.push(d?.monitor_ph);
+                datetime.push(days(d?.createdAt));
+            }
+        
+        chartPh = renderGraph({
+            id: "chart-ph",
+            seriesName: "PH",
+            seriesData: monitor_ph,
+            labels: datetime,
+        });
+
+        },
+    });
+    document.getElementById("turbidityDropDownButton")
+}
+
+// Turbidity Drop Down Button
+function changeTurbidity(day) {
+    const kode_unik = activeFilter?.kode_unik;
+    let chooseDate ;
+    if (day == "7") chooseDate = lastWeek;
+    if (day == "30") chooseDate = lastMonth;
+    if (day == "90") chooseDate = last3Month;
+
+    const buttonElemet =  document.getElementById("phDropdownButton");
+    buttonElemet.textContent = "";
+    buttonElemet.insertAdjacentHTML("beforeend", `
+    Last ${day} days
+    <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 10 6">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" d="m1 1 4 4 4-4" />
+    </svg>
+    `);
+    const finalUrl = `/api/v1/device/history?kode_unik=${kode_unik}&tanggal_akhir=${currentDate}&tanggal_awal=${chooseDate}`;
+
+    generalDataLoader({
+        url: finalUrl,
+        func: (data) => {
+        monior_kekeruhan.length = 0;
+        
+        for (let i = 0; i < data.length; i++) {
+            const d = data[i];
+            monior_kekeruhan.push(d?.monior_kekeruhan);
+            datetime.push(days(d?.createdAt));
+        }
+
+        chartTurbidity = renderGraph({
+            id: "chart-turbidity",
+            seriesName: "BTU",
+            seriesData: monior_kekeruhan,
+            labels: datetime,
+        });
+        
+
+        },
+    });
+    document.getElementById("turbidityDropDownButton")
+}
+
