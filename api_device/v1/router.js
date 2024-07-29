@@ -20,7 +20,7 @@ router.get("/user", loginRequired, userDeviceList);
 router.get("/history", loginRequired, deviceHistory);
 router.post("/link", loginRequired, linkDeviceToUser);
 router.post("/record", generateRecord);
-router.post("/generate", generateDeviceId);
+router.post("/", generateDeviceId);
 router.post("/toggle", toggleDevice);
 mqttTopic.listener("/update/record/", generateRecordMqtt);
 
