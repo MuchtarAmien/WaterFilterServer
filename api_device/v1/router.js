@@ -14,7 +14,7 @@ const {
     deviceDetail,
 } = require("./controller");
 
-router.get("/", deviceList);
+router.get("/", loginRequired, deviceList);
 router.get("/info/:kode_unik", deviceDetail);
 router.get("/user", loginRequired, userDeviceList);
 router.get("/history", loginRequired, deviceHistory);
