@@ -3,6 +3,7 @@ const { MqttTopic } = require("../../services/mqttserver");
 const mqttTopic = new MqttTopic();
 const { loginRequired } = require("../../middlewares/userMiddlewares");
 const {
+    deviceList,
     generateDeviceId,
     generateRecord,
     linkDeviceToUser,
@@ -13,6 +14,7 @@ const {
     deviceDetail,
 } = require("./controller");
 
+router.get("/", deviceList);
 router.get("/info/:kode_unik", deviceDetail);
 router.get("/user", loginRequired, userDeviceList);
 router.get("/history", loginRequired, deviceHistory);
