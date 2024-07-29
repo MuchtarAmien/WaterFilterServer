@@ -3,7 +3,6 @@ const { MqttTopic } = require("../../services/mqttserver");
 const mqttTopic = new MqttTopic();
 const { loginRequired } = require("../../middlewares/userMiddlewares");
 const {
-    deviceList,
     generateDeviceId,
     generateRecord,
     linkDeviceToUser,

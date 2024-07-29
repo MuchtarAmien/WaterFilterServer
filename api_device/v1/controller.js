@@ -3,18 +3,6 @@ const { generateString } = require("../../services/stringGenerator");
 const { sendTelegramMessageByKodeUnik } = require("../../services/telegramServices"); // Impor layanan Telegram
 const prisma = require("../../prisma/client");
 
-exports.deviceList = async (req, res) => {
-    try {
-        return resSuccess({
-            res,
-            title: "Success to show all device list",
-            data: ["device 1", "device 2"],
-        });
-    } catch (error) {
-        return resError({ res, errors: error });
-    }
-};
-
 exports.generateDeviceId = async (req, res) => {
     try {
         const kodeUnikPerangkat = generateString(5);
