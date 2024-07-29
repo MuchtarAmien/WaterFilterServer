@@ -16,6 +16,7 @@ exports.deviceList = async (req, res) => {
 };
 
 exports.generateDeviceId = async (req, res) => {
+    console.log("generateDeviceId endpoint hit");
     try {
         const kodeUnikPerangkat = generateString(5);
         await prisma.perangkat.create({
