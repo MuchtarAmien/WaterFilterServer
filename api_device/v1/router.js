@@ -13,7 +13,7 @@ const {
     toggleDevice,
     deviceDetail,
 } = require("./controller");
-router.post("/", generateDeviceId);
+router.post("/generate", generateDeviceId);
 router.get("/", deviceList);
 router.get("/info/:kode_unik", deviceDetail);
 router.get("/user", loginRequired, userDeviceList);
