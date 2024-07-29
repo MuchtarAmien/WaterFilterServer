@@ -13,14 +13,13 @@ const {
     toggleDevice,
     deviceDetail,
 } = require("./controller");
-
+router.post("/", generateDeviceId);
 router.get("/", deviceList);
 router.get("/info/:kode_unik", deviceDetail);
 router.get("/user", loginRequired, userDeviceList);
 router.get("/history", loginRequired, deviceHistory);
 router.post("/link", loginRequired, linkDeviceToUser);
 router.post("/record", generateRecord);
-router.post("/", generateDeviceId);
 router.post("/toggle", toggleDevice);
 mqttTopic.listener("/update/record/", generateRecordMqtt);
 
